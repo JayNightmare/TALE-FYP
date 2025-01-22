@@ -1,0 +1,29 @@
+/* Styles for Homepage - No Account */
+body {
+    background-color: #fff3e0;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    text-align: center;
+    padding: 20px;
+    background-color: #ff9800;
+    color: white;
+}
+
+main {
+    text-align: center;
+    margin-top: 50px;
+}
+
+a {
+    color: #ff9800;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}

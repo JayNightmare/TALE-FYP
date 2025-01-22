@@ -1,0 +1,136 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700");
+
+:root {
+    --font-inter: 'Inter', sans-serif;
+}
+
+body {
+    background-color: #070707;
+    margin: 0;
+    padding: 0;
+
+    color: #FFFFFF;
+
+    font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.navbar {
+    background: #070707;
+    height: 106px;
+    width: 100vw;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: stretch;
+    align-items: center;
+
+    color: white;
+}
+
+.nav-left {
+    margin-left: 20px;
+    margin-right: auto;
+    float: left;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    .nav-menu {
+        display: none;
+        cursor: pointer;
+        height: 32px;
+        width: 32px;
+
+        svg {
+            fill: white;
+        }
+    }
+
+    img {
+        cursor: pointer;
+        width: 120px;
+    }
+}
+
+.nav-middle {
+    display: flex;
+    gap: 160px;
+}
+
+.option {
+    cursor: pointer;
+}
+
+.nav-right {
+    margin-right: 20px;
+    margin-left: auto;
+    cursor: pointer;
+
+    img {
+        border-radius: 5px
+    }
+
+    .user-option {
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        gap: 10px;
+        max-width: fit-content;
+        max-height: 32px;
+        border-radius: 5px;
+        border-bottom: 1px solid #303030;
+        padding: 0 10px 0 10px;
+        background: #282828;
+    }
+}
+
+.navbar-popup {
+    text-align: center;
+    color: white;
+    display: none;
+
+    ul {
+        display: grid;
+        gap: 10px;
+        list-style-type: none;
+        padding: 0;
+    }
+}
+
+.block-layout-inject {
+    display: block !important;
+}
+
+@media (min-width: 560px) {
+    .navbar-popup {
+        display: none !important;
+    }
+}
+
+@media (max-width: 560px) {
+    .navbar {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .nav-menu {
+        display: flex !important;
+    }
+
+    .nav-middle {
+        display: none;
+    }
+}
+
+@media (max-width: 345px) {
+    .nav-left {
+        img {
+            display: none;
+        }
+    }
+}
+
+@media (max-width: 205px) {
+    .user-option p {
+        display: none;
+    }
+}
