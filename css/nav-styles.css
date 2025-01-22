@@ -8,6 +8,7 @@ body {
     background-color: #070707;
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
 
     color: #FFFFFF;
 
@@ -59,6 +60,11 @@ body {
 
 .option {
     cursor: pointer;
+    border-bottom: 2px solid transparent;
+}
+
+.option:hover {
+    border-bottom: 2px solid white;
 }
 
 .nav-right {

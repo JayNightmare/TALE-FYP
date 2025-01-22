@@ -80,7 +80,22 @@ blockquote, dd, dl, figure, h1, h2, h3, h4, h5, h6, hr, p, pre {
     cursor: pointer;
 }
 
-/* ! Animation Section ! */
+/* * Below Title * */
+.sub-title-container {
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+    text-align: center;
+}
+
+.sub-title {
+    font-size: .875rem;
+    line-height: 1.25rem;
+
+    color: rgba(255, 255, 255, 0.8);
+    animation: fade-in 3s ease-in-out forwards;
+}
+
+/* * Animation Section * */
 
 @keyframes title {
     0% {

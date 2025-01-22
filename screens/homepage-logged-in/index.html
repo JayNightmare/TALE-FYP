@@ -5,11 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage - Logged In</title>
-    <link rel="stylesheet" href="nav-styles.css">
-    <link rel="stylesheet" href="title-styles.css">
-    <link rel="stylesheet" href="footer-styles.css">
+    <link rel="stylesheet" href="../../css/nav-styles.css">
+    <link rel="stylesheet" href="../../css/title-styles.css">
+    <link rel="stylesheet" href="../../css/footer-styles.css">
+    <link rel="stylesheet" href="../../css/mainBody-styles.css">
     <link rel="preload" href="../../assets/fonts/162bf645eb375add-s.p.ttf" as="font" crossorigin="" type="font/ttf">
-    <script src="./script.js" async crossorigin></script>
+    <script src="../../js/navMenu-script.js" async crossorigin></script>
+    <script src="../../js/scrollable-script.js" async crossorigin></script>
 </head>
 
 <body>
@@ -70,20 +72,122 @@
                 <p class="tale shadows">L</p>
                 <p class="dot">.</p>
                 <p class="tale shadows">E</p>
-            </h1>
+            </h1> 
             <div class="hidden animate-borders right"></div>
+            <div class="sub-title-container">
+                <h2 class="sub-title">
+                    T.A.L.E will translate your message so that you can make new friends on Discord without the worry of a
+                </h2>
+                <h2 class="sub-title">
+                    ✨ language barrier ✨
+                </h2>
+            </div>
         </div>
-
     </main>
+
+    <svg class="svg-wavy" viewBox="0 0 1920 225" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 37.5001L53.3333 59.7001C106.667 86.0001 213.333 140 320 123.7C426.667 108 533.333 22.0001 640 11.7001C746.667 1.0001 853.333 65.0001 960 97.0001C1066.67 129 1173.33 129 1280 102.3C1386.67 76.0001 1493.33 22.0001 1600 6.30011C1706.67 -9.99989 1813.33 12.0001 1866.67 22.3001L1920 33.0001V225H1866.67C1813.33 225 1706.67 225 1600 225C1493.33 225 1386.67 225 1280 225C1173.33 225 1066.67 225 960 225C853.333 225 746.667 225 640 225C533.333 225 426.667 225 320 225C213.333 225 106.667 225 53.3333 225H0V37.5001Z" fill="#121212"/>
+    </svg>
+        
+
     <!-- * Main Body * -->
-    <div class="server-list-container"></div>
+    <div class="bg-container">
+        <div class="text-container">
+            <div class="border-bottom-h2">
+                <h2 class="underline-blue">Trusted</h2>
+                <h2 >to keep conversations going</h2>
+            </div>
+            <div class="description-servers">
+                <p>TALE is reaching more than x (number notation) users with over x (number notation) translated messages:</p>
+            </div>
+        </div>
+        <div class="server-list-container">
+            <div class="arrows">
+                <div class="arrow" id="prev">&#8249;</div>
+                <div class="arrow" id="next">&#8250;</div>
+            </div>
+            <div class="server-list" id="serverList">
+                <div class="server-list-item">
+                    <div class="server-list-item-image">
+                        <img src="https://picsum.photos/64/64" alt="Server Image" />
+                    </div>
+                    <div class="server-list-item-info">
+                        <h3 class="server-list-item-title">Server Name</h3>
+                        <ul>
+                            <li class="server-list-item-description">000,000</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="server-list-item">
+                    <div class="server-list-item-image">
+                        <img src="https://picsum.photos/64/64" alt="Server Image" />
+                    </div>
+                    <div class="server-list-item-info">
+                        <h3 class="server-list-item-title">Server Name</h3>
+                        <ul>
+                            <li class="server-list-item-description">000,000</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="server-list-item">
+                    <div class="server-list-item-image">
+                        <img src="https://picsum.photos/64/64" alt="Server Image" />
+                    </div>
+                    <div class="server-list-item-info">
+                        <h3 class="server-list-item-title">Server Name</h3>
+                        <ul>
+                            <li class="server-list-item-description">000,000</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="server-list-item">
+                    <div class="server-list-item-image">
+                        <img src="https://picsum.photos/64/64" alt="Server Image" />
+                    </div>
+                    <div class="server-list-item-info">
+                        <h3 class="server-list-item-title">Server Name</h3>
+                        <ul>
+                            <li class="server-list-item-description">000,000</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="server-list-item">
+                    <div class="server-list-item-image">
+                        <img src="https://picsum.photos/64/64" alt="Server Image" />
+                    </div>
+                    <div class="server-list-item-info">
+                        <h3 class="server-list-item-title">Server Name</h3>
+                        <ul>
+                            <li class="server-list-item-description">000,000</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="server-list-item">
+                    <div class="server-list-item-image">
+                        <img src="https://picsum.photos/64/64" alt="Server Image" />
+                    </div>
+                    <div class="server-list-item-info">
+                        <h3 class="server-list-item-title">Server Name</h3>
+                        <ul>
+                            <li class="server-list-item-description">000,000</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <svg class="svg-wavy" viewBox="0 0 1920 232" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1920 193.359L1866.67 170.466C1813.33 143.344 1706.67 87.6563 1600 104.466C1493.33 120.656 1386.67 209.344 1280 219.966C1173.33 231 1066.67 165 960 132C853.333 99 746.667 99 640 126.534C533.333 153.656 426.667 209.344 320 225.534C213.333 242.344 106.667 219.656 53.3333 209.034L0 198V4.57764e-05H53.3333C106.667 4.57764e-05 213.333 4.57764e-05 320 4.57764e-05C426.667 4.57764e-05 533.333 4.57764e-05 640 4.57764e-05C746.667 4.57764e-05 853.333 4.57764e-05 960 4.57764e-05C1066.67 4.57764e-05 1173.33 4.57764e-05 1280 4.57764e-05C1386.67 4.57764e-05 1493.33 4.57764e-05 1600 4.57764e-05C1706.67 4.57764e-05 1813.33 4.57764e-05 1866.67 4.57764e-05H1920V193.359Z" fill="#121212"/>
+    </svg>
+        
 
     <div class="info-container"></div>
     
     <!-- * Footer * -->
-     <footer>
+    <footer>
         <p>&copy; 2023 Tale of the Elements</p>
-     </footer>
+    </footer>
 
 </body>
 </html>
