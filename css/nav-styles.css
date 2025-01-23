@@ -72,8 +72,10 @@ body {
     margin-left: auto;
     cursor: pointer;
 
-    img {
-        border-radius: 5px
+    .nav-image {
+        border-radius: 5px;
+        width: 48px;
+        height: 48px;
     }
 
     .user-option {
