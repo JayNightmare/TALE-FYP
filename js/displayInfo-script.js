@@ -12,10 +12,9 @@ if (token) {
         : `https://cdn.discordapp.com/embed/avatars/0.png`;
 
     // Display user info
-    document.getElementById('user-info').innerHTML = `
-        <img src="https://cdn.discordapp.com/avatars/${userData.id}/${avatar}" alt="Avatar" style="width: 50px; height: 50px; border-radius: 10%;">
-        <p>Welcome, ${userData.username}!</p>
+    document.getElementById('discord-avatar').innerHTML = `
+        <img src="https://cdn.discordapp.com/avatars/${userData.id}/${avatar}" alt="Avatar">
     `;
 } else {
-    document.getElementById('user-info').innerHTML = `<p>Error loading user info.</p>`;
+    document.getElementById('discord-avatar').innerHTML = `<p>Error</p>`;
 }
