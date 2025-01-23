@@ -13,7 +13,7 @@ if (token) {
 
     // Display user info
     document.getElementById('discord-avatar').innerHTML = `
-        <img src="${avatar}" alt="Avatar">
+        <img src="${avatar}" class="nav-image" alt="Avatar">
     `;
 } else {
     document.getElementById('discord-avatar').innerHTML = `<p>Error</p>`;
