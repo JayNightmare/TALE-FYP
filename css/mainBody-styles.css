@@ -86,7 +86,7 @@
 }
 
 @media (max-width: 768px) {
-    .arrows {
+    .flickity-button {
         display: none;
     }
 
