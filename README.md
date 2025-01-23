@@ -19,8 +19,13 @@
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
 
-[![CC0 1.0 License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
+<div align="center">
+  
+  [![CC0 1.0 License][license-shield]][license-url]
+  [![LinkedIn][linkedin-shield]][linkedin-url]
+  
+</div>
+
 
 
 <!-- PROJECT LOGO -->
@@ -147,7 +152,7 @@ Don't forget to give the project a star! Thanks again!
 <!-- LICENSE -->
 ## License
 
-Distributed under the CC0 1.0. See `LICENSE.txt` for more information.
+Distributed under the CC0 1.0. See [`LICENSE.txt`](https://github.com/JayNightmare/TALE-FYP/blob/master/LICENSE.txt) for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -181,7 +186,7 @@ Distributed under the CC0 1.0. See `LICENSE.txt` for more information.
 [license-url]: https://github.com/JayNightmare/TALE-FYP/blob/master/LICENSE.txt
 <!-- // -->
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/linkedin_username
+[linkedin-url]: https://www.linkedin.com/in/jordan-s-bell/
 <!-- // -->
 [product-screenshot]: images/screenshot.png
 <!-- // -->
