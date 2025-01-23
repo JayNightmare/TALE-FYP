@@ -4,6 +4,7 @@ const passport = require('passport');
 const DiscordStrategy = require('passport-discord').Strategy;
 const cors = require('cors');
 require('dotenv').config();
+const jwt = require('jsonwebtoken');
 
 const app = express();
 
@@ -41,12 +42,19 @@ app.get('/auth/discord', passport.authenticate('discord'));
 
 // Route: Handle Callback and Redirect to GitHub Pages
 app.get('/auth/discord/callback', passport.authenticate('discord', {
-    failureRedirect: 'https://jaynightmare.github.io/TALE-FYP/screens/homepage-no-account/index.html', // Redirect to "log in" page on failure
+    failureRedirect: 'https://jaynightmare.github.io/TALE-FYP/screens/homepage-no-account/index.html',
 }), (req, res) => {
     const user = req.user;
 
-    // Send user info to the "logged in" page via query parameters
-    const redirectUrl = `https://jaynightmare.github.io/TALE-FYP/screens/homepage-logged-in/index.html?username=${user.username}&id=${user.id}&avatar=${user.avatar}`;
+    // Generate JWT
+    const token = jwt.sign({
+        username: user.username,
+        id: user.id,
+        avatar: user.avatar,
+    }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+    // Redirect with the token as a query parameter
+    const redirectUrl = `https://jaynightmare.github.io/TALE-FYP/screens/homepage-logged-in/index.html?token=${token}`;
     res.redirect(redirectUrl);
 });
 

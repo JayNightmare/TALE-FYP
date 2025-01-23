@@ -1,14 +1,20 @@
-// Parse Query Parameters
+// Parse token from URL
 const urlParams = new URLSearchParams(window.location.search);
-const username = urlParams.get('username');
-const userId = urlParams.get('id');
-const avatar = urlParams.get('avatar');
+const token = urlParams.get('token');
 
-// Display User Info
-if (username && userId && avatar) {
+if (token) {
+    // Decode JWT (you can use libraries like jwt-decode)
+    const userData = JSON.parse(atob(token.split('.')[1]));
+
+    // If userdata avatar contains "a_" make it .gif format
+    const avatar = userData.avatar ? userData.avatar.startsWith("a_") ? `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.gif`
+        : `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`
+        : `https://cdn.discordapp.com/embed/avatars/0.png`;
+
+    // Display user info
     document.getElementById('user-info').innerHTML = `
-        <img src="https://cdn.discordapp.com/avatars/${userId}/${avatar}.png" alt="Avatar" style="width: 50px; height: 50px; border-radius: 50%;">
-        <p>Welcome, ${username}!</p>
+        <img src="https://cdn.discordapp.com/avatars/${userData.id}/${avatar}" alt="Avatar" style="width: 50px; height: 50px; border-radius: 10%;">
+        <p>Welcome, ${userData.username}!</p>
     `;
 } else {
     document.getElementById('user-info').innerHTML = `<p>Error loading user info.</p>`;
