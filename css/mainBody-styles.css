@@ -1,3 +1,5 @@
+/* * Server Section * */
+
 .server-container {
     background-color: #121212;
     margin-top: -10px;
@@ -57,7 +59,7 @@
 .server-list-item-image img {
     width: 64px;
     height: 64px;
-    border-radius: 50%;
+    border-radius: 10px;
 }
 
 .server-list-item-info h3 {
@@ -111,4 +113,55 @@
     .border-bottom-h2 h2 {
         text-align: center;
     }
+}
+
+/* // */
+
+/* * Info Section * */
+
+.info-container {
+    margin-top: 100px;
+}
+
+.feature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 188px;
+    margin: 30px 5%;
+}
+
+.feature-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 100px;
+}
+
+.feature-list-item-title {
+    background: linear-gradient(90deg, #4A81E6 0%, #736CE8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    font-size: 38px;
+    font-weight: 900;
+}
+
+.feature-list-item-info ul {
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.feature-list-item-info ul li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.feature-list-item-info ul li i {
+    color: #4A81E6;
+    font-size: 16px;
 }

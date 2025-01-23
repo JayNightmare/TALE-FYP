@@ -1,9 +1,3 @@
-// ! Scrollable server list
-
-
-
-// //
-
 // ! Nav Options - Scroll to section
 
 document.querySelectorAll('.tale-nav-list li').forEach((item) => {
