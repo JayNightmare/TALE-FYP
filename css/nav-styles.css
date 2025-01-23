@@ -111,7 +111,14 @@ body {
     }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 1024px) {
+    .nav-middle {
+        gap: unset;
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 767px) {
     .navbar {
         grid-template-columns: repeat(2, 1fr);
     }

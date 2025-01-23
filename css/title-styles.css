@@ -108,7 +108,7 @@ blockquote, dd, dl, figure, h1, h2, h3, h4, h5, h6, hr, p, pre {
     color: white;
     cursor: pointer;
     animation: fade-in 3s ease-in-out forwards;
-    word-spacing: 3px;
+    word-spacing: 1px;
     font-size: 16px;
     transition: all 0.3s ease;
 }
@@ -193,5 +193,30 @@ blockquote, dd, dl, figure, h1, h2, h3, h4, h5, h6, hr, p, pre {
 
     to {
         text-shadow: -4px 4px #ef3550,-8px 8px #f48fb1,-12px 12px #7e57c2,-16px 16px #2196f3,-20px 20px #26c6da,-24px 24px #43a047,-28px 28px #eeff41,-32px 32px #f9a825,-36px 36px #ff5722
+    }
+}
+
+/* * Media * */
+
+@media (max-width: 767px) {
+    .sub-title-container {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .tale-nav-list {
+        gap: 30px;
+    }
+}
+
+@media (max-width: 548px) {
+    .tale-container {
+        font-size: 6rem;
+    }
+}
+
+@media (max-width: 420px) {
+    .tale-container {
+        font-size: 4rem;
     }
 }

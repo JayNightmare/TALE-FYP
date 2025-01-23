@@ -9,9 +9,11 @@
     <link rel="stylesheet" href="../../css/title-styles.css">
     <link rel="stylesheet" href="../../css/footer-styles.css">
     <link rel="stylesheet" href="../../css/mainBody-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.3.0/flickity.min.css">
     <link rel="preload" href="../../assets/fonts/162bf645eb375add-s.p.ttf" as="font" crossorigin="" type="font/ttf">
     <script src="../../js/navMenu-script.js" async crossorigin></script>
     <script src="../../js/scrollable-script.js" async crossorigin></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.3.0/flickity.pkgd.min.js"></script>
 </head>
 
 <body>
@@ -58,9 +60,9 @@
             <nav class="tale-nav">
                 <ul class="tale-nav-list">
                     <!-- Scrolls to Server List Section -->
-                    <li class="server-list">Servers</li>
+                    <li class="server-list" data-target=".server-container">Servers</li>
                     <!-- Scrolls to Info Section -->
-                    <li class="info">Info</li>
+                    <li class="info" data-target=".info-container">Info</li>
                 </ul>
             </nav>
             <div class="hidden animate-borders left"></div>
@@ -95,7 +97,7 @@
         
 
     <!-- * Main Body * -->
-    <div class="bg-container">
+    <div class="server-container">
         <div class="text-container">
             <div class="border-bottom-h2">
                 <h2 class="underline-blue">Trusted</h2>
@@ -105,77 +107,115 @@
                 <p>TALE is reaching more than x (number notation) users with over x (number notation) translated messages:</p>
             </div>
         </div>
-        <div class="server-list-container">
-            <div class="arrows">
-                <div class="arrow" id="prev">&#8249;</div>
-                <div class="arrow" id="next">&#8250;</div>
+        <div class="server-list js-flickity" id="serverList" data-flickity='{"wrapAround": true, "autoPlay": 3000}'>
+            <div class="server-list-item">
+                <div class="server-list-item-image">
+                    <img src="https://picsum.photos/64/64" alt="Server Image" />
+                </div>
+                <div class="server-list-item-info">
+                    <h3 class="server-list-item-title">Server Name 1</h3>
+                    <ul>
+                        <li class="server-list-item-description">000,000</li>
+                    </ul>
+                </div>
             </div>
-            <div class="server-list" id="serverList">
-                <div class="server-list-item">
-                    <div class="server-list-item-image">
-                        <img src="https://picsum.photos/64/64" alt="Server Image" />
-                    </div>
-                    <div class="server-list-item-info">
-                        <h3 class="server-list-item-title">Server Name</h3>
-                        <ul>
-                            <li class="server-list-item-description">000,000</li>
-                        </ul>
-                    </div>
+            <div class="server-list-item">
+                <div class="server-list-item-image">
+                    <img src="https://picsum.photos/64/64" alt="Server Image" />
                 </div>
-                <div class="server-list-item">
-                    <div class="server-list-item-image">
-                        <img src="https://picsum.photos/64/64" alt="Server Image" />
-                    </div>
-                    <div class="server-list-item-info">
-                        <h3 class="server-list-item-title">Server Name</h3>
-                        <ul>
-                            <li class="server-list-item-description">000,000</li>
-                        </ul>
-                    </div>
+                <div class="server-list-item-info">
+                    <h3 class="server-list-item-title">Server Name 2</h3>
+                    <ul>
+                        <li class="server-list-item-description">000,000</li>
+                    </ul>
                 </div>
-                <div class="server-list-item">
-                    <div class="server-list-item-image">
-                        <img src="https://picsum.photos/64/64" alt="Server Image" />
-                    </div>
-                    <div class="server-list-item-info">
-                        <h3 class="server-list-item-title">Server Name</h3>
-                        <ul>
-                            <li class="server-list-item-description">000,000</li>
-                        </ul>
-                    </div>
+            </div>
+            <div class="server-list-item">
+                <div class="server-list-item-image">
+                    <img src="https://picsum.photos/64/64" alt="Server Image" />
                 </div>
-                <div class="server-list-item">
-                    <div class="server-list-item-image">
-                        <img src="https://picsum.photos/64/64" alt="Server Image" />
-                    </div>
-                    <div class="server-list-item-info">
-                        <h3 class="server-list-item-title">Server Name</h3>
-                        <ul>
-                            <li class="server-list-item-description">000,000</li>
-                        </ul>
-                    </div>
+                <div class="server-list-item-info">
+                    <h3 class="server-list-item-title">Server Name 3</h3>
+                    <ul>
+                        <li class="server-list-item-description">000,000</li>
+                    </ul>
                 </div>
-                <div class="server-list-item">
-                    <div class="server-list-item-image">
-                        <img src="https://picsum.photos/64/64" alt="Server Image" />
-                    </div>
-                    <div class="server-list-item-info">
-                        <h3 class="server-list-item-title">Server Name</h3>
-                        <ul>
-                            <li class="server-list-item-description">000,000</li>
-                        </ul>
-                    </div>
+            </div>
+            <div class="server-list-item">
+                <div class="server-list-item-image">
+                    <img src="https://picsum.photos/64/64" alt="Server Image" />
                 </div>
-                <div class="server-list-item">
-                    <div class="server-list-item-image">
-                        <img src="https://picsum.photos/64/64" alt="Server Image" />
-                    </div>
-                    <div class="server-list-item-info">
-                        <h3 class="server-list-item-title">Server Name</h3>
-                        <ul>
-                            <li class="server-list-item-description">000,000</li>
-                        </ul>
-                    </div>
+                <div class="server-list-item-info">
+                    <h3 class="server-list-item-title">Server Name 4</h3>
+                    <ul>
+                        <li class="server-list-item-description">000,000</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="server-list-item">
+                <div class="server-list-item-image">
+                    <img src="https://picsum.photos/64/64" alt="Server Image" />
+                </div>
+                <div class="server-list-item-info">
+                    <h3 class="server-list-item-title">Server Name 5</h3>
+                    <ul>
+                        <li class="server-list-item-description">000,000</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="server-list-item">
+                <div class="server-list-item-image">
+                    <img src="https://picsum.photos/64/64" alt="Server Image" />
+                </div>
+                <div class="server-list-item-info">
+                    <h3 class="server-list-item-title">Server Name 6</h3>
+                    <ul>
+                        <li class="server-list-item-description">000,000</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="server-list-item">
+                <div class="server-list-item-image">
+                    <img src="https://picsum.photos/64/64" alt="Server Image" />
+                </div>
+                <div class="server-list-item-info">
+                    <h3 class="server-list-item-title">Server Name 7</h3>
+                    <ul>
+                        <li class="server-list-item-description">000,000</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="server-list-item">
+                <div class="server-list-item-image">
+                    <img src="https://picsum.photos/64/64" alt="Server Image" />
+                </div>
+                <div class="server-list-item-info">
+                    <h3 class="server-list-item-title">Server Name 8</h3>
+                    <ul>
+                        <li class="server-list-item-description">000,000</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="server-list-item">
+                <div class="server-list-item-image">
+                    <img src="https://picsum.photos/64/64" alt="Server Image" />
+                </div>
+                <div class="server-list-item-info">
+                    <h3 class="server-list-item-title">Server Name 9</h3>
+                    <ul>
+                        <li class="server-list-item-description">000,000</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="server-list-item">
+                <div class="server-list-item-image">
+                    <img src="https://picsum.photos/64/64" alt="Server Image" />
+                </div>
+                <div class="server-list-item-info">
+                    <h3 class="server-list-item-title">Server Name 10</h3>
+                    <ul>
+                        <li class="server-list-item-description">000,000</li>
+                    </ul>
                 </div>
             </div>
         </div>

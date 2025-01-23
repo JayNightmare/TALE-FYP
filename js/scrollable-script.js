@@ -1,30 +1,23 @@
-const serverList = document.getElementById('serverList');
-const prev = document.getElementById('prev');
-const next = document.getElementById('next');
+// ! Scrollable server list
 
-let scrollAmount = 0;
 
-function scrollList(direction) {
-    const scrollWidth = 300; // The width of one item
-    const maxScroll = serverList.scrollWidth - serverList.clientWidth;
 
-    if (direction === 'next') {
-        scrollAmount += scrollWidth;
-        if (scrollAmount > maxScroll) {
-            scrollAmount = 0; // Reset to start
+// //
+
+// ! Nav Options - Scroll to section
+
+document.querySelectorAll('.tale-nav-list li').forEach((item) => {
+    item.addEventListener('click', () => {
+        const targetSelector = item.getAttribute('data-target');
+        const targetElement = document.querySelector(targetSelector);
+
+        if (targetElement) {
+            targetElement.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+            });
         }
-    } else {
-        scrollAmount -= scrollWidth;
-        if (scrollAmount < 0) {
-            scrollAmount = maxScroll; // Reset to end
-        }
-    }
+    });
+});
 
-    serverList.style.transform = `translateX(-${scrollAmount}px)`;
-}
-
-next.addEventListener('click', () => scrollList('next'));
-prev.addEventListener('click', () => scrollList('prev'));
-
-// Auto-scroll every 3 seconds
-setInterval(() => scrollList('next'), 3000);
+// //
