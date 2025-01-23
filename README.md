@@ -45,7 +45,7 @@
     <br />
     <a href="https://jaynightmare.github.io/TALE-FYP/">View Page</a>
     &middot;
-    <a href="https://github.com/JayNightmare/TALE-FYP/issues/new?labels=bug">Report Bug</a>
+    <a href="https://github.com/JayNightmare/TALE-FYP/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     &middot;
     <a href="https://github.com/JayNightmare/TALE-FYP/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
   </p>
