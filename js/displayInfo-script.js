@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get('token');
-    const loading = document.getElementById('loading');
 
     if (token) {
         // Store the token in localStorage
@@ -9,11 +8,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Remove the token from the URL
         window.history.replaceState({}, document.title, window.location.pathname);
-    }
-
-    // Reload page once when token is confirmed
-    if (window.location.href.includes('token')) {
-        window.location.href = 'https://jaynightmare.github.io/TALE-FYP/screens/homepage/index.html';
     }
 
     await fetchAndUpdateUserInfo();

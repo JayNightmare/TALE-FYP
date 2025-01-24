@@ -54,7 +54,7 @@ app.get('/auth/discord/callback', passport.authenticate('discord', {
     }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
     // Redirect with the token as a query parameter
-    const redirectUrl = `https://jaynightmare.github.io/TALE-FYP/screens/homepage/index.html?token=${token}`;
+    const redirectUrl = `https://jaynightmare.github.io/TALE-FYP/screens/callback/index.html?token=${token}`;
     res.redirect(redirectUrl);
 });
 
