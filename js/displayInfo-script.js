@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get('token');
+    const loading = document.getElementById('loading');
 
     if (token) {
         // Store the token in localStorage
@@ -10,7 +11,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         window.history.replaceState({}, document.title, window.location.pathname);
     }
 
-    await fetchAndUpdateUserInfo();
+    // If loading is present, reload page
+    if (loading) {
+        window.location.reload();
+    } else {
+        await fetchAndUpdateUserInfo();
+    }
 });
 
 async function fetchAndUpdateUserInfo() {
