@@ -11,12 +11,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         window.history.replaceState({}, document.title, window.location.pathname);
     }
 
-    // If loading is present, reload page
-    if (loading) {
-        window.location.reload();
-    } else {
-        await fetchAndUpdateUserInfo();
+    // Reload page once when token is confirmed
+    if (window.location.href.includes('token')) {
+        window.location.href = 'https://jaynightmare.github.io/TALE-FYP/screens/homepage/index.html';
     }
+
+    await fetchAndUpdateUserInfo();
 });
 
 async function fetchAndUpdateUserInfo() {
