@@ -143,6 +143,41 @@ body {
     transition: all 0.5s;
 }
 
+/* Dropdown menu styles */
+.dropdown {
+    position: absolute;
+    top: 85px; /* Adjust this to position below the profile picture */
+    right: 12px;
+    background-color: #1e1e1e; /* Dark background for the dropdown */
+    border: 1px solid #333;
+    border-radius: 5px;
+    min-width: 150px;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    display: none;
+}
+
+.dropdown-item {
+    display: block;
+    padding: 10px 20px;
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #5865F2; /* Discord-inspired hover effect */
+    color: white;
+}
+
+/* Show dropdown menu */
+.dropdown.show {
+    display: block;
+}
+
+/* ! Media ! */
+
 @media (min-width: 560px) {
     .navbar-popup {
         display: none !important;
