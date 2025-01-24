@@ -75,16 +75,24 @@ app.get('/logout', (req, res) => {
 
 // * Route: Check Auth Status
 app.get('/api/auth/status', (req, res) => {
-    if (req.isAuthenticated() && req.user) {
-        // User is logged in
+    const token = req.cookies?.auth_token; // Retrieve the cookie
+    if (!token) {
+        console.log('No token provided');
+        return res.json({ loggedIn: false });
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET); // Decode and verify token
+        console.log('Decoded token:', decoded);
+
         res.json({
             loggedIn: true,
-            username: req.user.username,
-            avatar: req.user.avatar,
-            id: req.user.id,
+            username: decoded.username,
+            avatar: decoded.avatar,
+            id: decoded.id,
         });
-    } else {
-        // User is not logged in
+    } catch (err) {
+        console.error('Token verification failed:', err);
         res.json({ loggedIn: false });
     }
 });

@@ -17,10 +17,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             // User is logged in: Display profile picture
             userSection.innerHTML = `
                 <div class="user-option">
-                    <img src="${avatar}" 
-                        alt="${data.username}" 
-                        class="nav-image" 
-                        style="border-radius: 50%; width: 48px; height: 48px;" />
+                    <img src="${avatar}"
+                        alt="${data.username}"
+                        class="nav-image" />
                 </div>
             `;
         } else {
