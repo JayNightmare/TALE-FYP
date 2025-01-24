@@ -1,15 +1,31 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    const userSection = document.getElementById('user-section');
+    const userSection = document.getElementById('user-section'); // Placeholder for user info
+
+    const token = localStorage.getItem('auth_token');
+
+    if (!token) {
+        // User is not logged in: Display login button
+        userSection.innerHTML = `
+            <a class="user-option" href="https://tale-fyp.onrender.com/auth/discord">
+                <button class="login-button" alt="Log In">Log In</button>
+            </a>
+        `;
+        return;
+    }
 
     try {
         const response = await fetch('https://tale-fyp.onrender.com/api/auth/status', {
-            credentials: 'include', // Include cookies for authentication
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
         });
 
         const data = await response.json();
 
         if (data.loggedIn) {
             console.log('User is logged in:', data.username);
+
             const avatar = data.avatar.startsWith("a_")
                 ? `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.gif`
                 : `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png`;
@@ -19,7 +35,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <div class="user-option">
                     <img src="${avatar}"
                         alt="${data.username}"
-                        class="nav-image" />
+                        class="nav-image"  />
                 </div>
             `;
         } else {
@@ -40,5 +56,19 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <button class="login-button" alt="Log In">Log In</button>
             </a>
         `;
+    }
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+
+    if (token) {
+        // Store the token in localStorage
+        localStorage.setItem('auth_token', token);
+
+        // Remove the token from the URL to clean up
+        window.history.replaceState({}, document.title, window.location.pathname);
     }
 });

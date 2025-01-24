@@ -53,15 +53,8 @@ app.get('/auth/discord/callback', passport.authenticate('discord', {
         avatar: user.avatar,
     }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-    res.cookie('auth_token', token, {
-        httpOnly: true,
-        secure: true, // Ensure this is true for HTTPS
-        sameSite: 'None', // Adjust based on your frontend/backend configuration
-        maxAge: 3600000, // 1 hour
-    });
-
     // Redirect with the token as a query parameter
-    const redirectUrl = `https://jaynightmare.github.io/TALE-FYP/screens/homepage/index.html`;
+    const redirectUrl = `https://jaynightmare.github.io/TALE-FYP/screens/homepage/index.html?token=${token}`;
     res.redirect(redirectUrl);
 });
 
@@ -75,11 +68,13 @@ app.get('/logout', (req, res) => {
 
 // * Route: Check Auth Status
 app.get('/api/auth/status', (req, res) => {
-    const token = req.cookies?.auth_token; // Retrieve the cookie
-    if (!token) {
-        console.log('No token provided');
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader) {
         return res.json({ loggedIn: false });
     }
+
+    const token = authHeader.split(' ')[1]; // Extract token from "Bearer <token>"
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET); // Decode and verify token
