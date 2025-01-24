@@ -67,8 +67,9 @@ app.get('/auth/discord/callback', passport.authenticate('discord', {
 
 // * Route: Logout
 app.get('/logout', (req, res) => {
+    res.clearCookie('auth_token', { secure: true, sameSite: 'None' }); // Clear the JWT cookie
     req.logout(() => {
-        res.redirect('https://jaynightmare.github.io/TALE-FYP/screens/homepage/index.html'); // Redirect back to "log in" page
+        res.redirect('https://jaynightmare.github.io/TALE-FYP/screens/homepage/index.html');
     });
 });
 

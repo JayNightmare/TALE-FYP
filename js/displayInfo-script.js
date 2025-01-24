@@ -1,24 +1,3 @@
-// Parse token from URL
-const urlParams = new URLSearchParams(window.location.search);
-const token = urlParams.get('token');
-
-if (token) {
-    // Decode JWT (you can use libraries like jwt-decode)
-    const userData = JSON.parse(atob(token.split('.')[1]));
-
-    // If userdata avatar contains "a_" make it .gif format
-    const avatar = userData.avatar ? userData.avatar.startsWith("a_") ? `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.gif`
-        : `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`
-        : `https://cdn.discordapp.com/embed/avatars/0.png`;
-
-    // Display user info
-    document.getElementById('discord-avatar').innerHTML = `
-        <img src="${avatar}" class="nav-image" alt="Avatar">
-    `;
-} else {
-    document.getElementById('discord-avatar').innerHTML = `<p>Error</p>`;
-}
-
 document.addEventListener('DOMContentLoaded', async () => {
     const userSection = document.getElementById('user-section');
 
@@ -30,10 +9,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         const data = await response.json();
 
         if (data.loggedIn) {
+            const avatar = data.avatar.startsWith("a_")
+                ? `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.gif`
+                : `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png`;
+
             // User is logged in: Display profile picture
             userSection.innerHTML = `
                 <div class="user-option">
-                    <img src="https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png" 
+                    <img src="${avatar}" 
                         alt="${data.username}" 
                         class="nav-image" 
                         style="border-radius: 50%; width: 48px; height: 48px;" />
