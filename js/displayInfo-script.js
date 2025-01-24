@@ -54,7 +54,7 @@ async function fetchAndUpdateUserInfo() {
                         id="profile-picture" />
                     
                     <div id="dropdown-menu" class="dropdown">
-                        <a href="../screens/account/index.html" class="dropdown-item">Account</a>
+                        <a href="../account/index.html" class="dropdown-item">Account</a>
                         <a href="#" id="logout" class="dropdown-item">Logout</a>
                     </div>
                 </div>
