@@ -35,7 +35,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <div class="user-option">
                     <img src="${avatar}"
                         alt="${data.username}"
-                        class="nav-image"  />
+                        class="nav-image"
+                        id="profile-picture" />
                     
                     <div id="dropdown-menu" class="dropdown">
                         <a href="/account.html" class="dropdown-item">Account</a>
