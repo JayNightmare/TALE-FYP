@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Page</title>
+    <link rel="stylesheet" href="../../css/account-styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-left">
+                <img src="../../assets/images/Small Title.png" alt="T.A.L.E Logo" class="nav-logo">
+            </div>
+            <div class="nav-middle">
+                <div class="server-name">
+                    <input type="text" placeholder="Server Name">
+                    <button class="search-button">🔍</button>
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="user-info">
+                    <span class="username">User Name</span>
+                    <img src="https://picsum.photos/40/40" alt="User Profile Picture" class="user-avatar">
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="account-container">
+            <div class="account-header">
+                <h2>Logged in as <span class="username">Username</span></h2>
+                <img src="https://picsum.photos/64/64" alt="User Avatar" class="account-avatar">
+            </div>
+            <div class="account-info">
+                <div class="info">
+                    <h3>Account Info</h3>
+                    <p><strong>Billing:</strong> No Subscription Yet</p>
+                    <p><strong>Servers In:</strong> 100</p>
+                </div>
+                <div class="delete-data">
+                    <h3>Delete User Data?</h3>
+                    <p>Doing so will delete all instances of your user data from the database</p>
+                    <input type="checkbox">
+                </div>
+            </div>
+            <button class="logout-button">Logout?</button>
+        </div>
+    </main>
+</body>
+</html>
