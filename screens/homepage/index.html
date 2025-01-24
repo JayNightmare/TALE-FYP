@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage - Logged In</title>
+    <link rel="stylesheet" href="../../css/nav-styles.css">
+    <link rel="stylesheet" href="../../css/title-styles.css">
+    <link rel="stylesheet" href="../../css/footer-styles.css">
+    <link rel="stylesheet" href="../../css/mainBody-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.3.0/flickity.min.css">
+    <link rel="preload" href="../../assets/fonts/162bf645eb375add-s.p.ttf" as="font" crossorigin="" type="font/ttf">
+    <script src="../../js/navMenu-script.js" async crossorigin></script>
+    <script src="../../js/scrollable-script.js" async crossorigin></script>
+    <script src="../../js/infoLogic-script.js" async crossorigin></script>
+    <script src="../../js/displayInfo-script.js" async crossorigin></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.3.0/flickity.pkgd.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar" id="navbar">
+            <div class="nav-left">
+                <div class="nav-menu" id="navBarMenu">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                        <path
+                            d="M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z" />
+                    </svg>
+                </div>
+                <img src="../../assets/images/Small Title.png" class="nav-image" alt="<3" />
+            </div>
+            <div class="nav-middle options">
+                <div class="option one">Home</div>
+                <div class="option two">About</div>
+                <div class="option three">Info</div>
+                <div class="option four">Dashboard</div>
+            </div>
+            <div class="nav-right user-options" id="user-section">
+                <!-- Placeholder for Login Button or Profile Picture -->
+            </div>
+        </nav>
+    </header>
+
+    <div id="user-info"></div>
+
+    <!-- * Popup Screen For Nav Menu * -->
+    <div class="navbar-popup" id="navbar-options">
+        <ul class="popup-options options" id="options">
+            <li class="option one">Home</li>
+            <li class="option two">About</li>
+            <li class="option three">Info</li>
+            <li class="option four">Dashboard</li>
+        </ul>
+    </div>
+
+
+    <!-- * Title Body * -->
+
+    <main>
+        <div class="flex-container">
+            <nav class="tale-nav">
+                <ul class="tale-nav-list">
+                    <!-- Scrolls to Server List Section -->
+                    <li class="server-list" data-target=".add-to-server">Servers</li>
+                    <!-- Scrolls to Info Section -->
+                    <li class="info" data-target=".info-container">Info</li>
+                </ul>
+            </nav>
+            <div class="hidden animate-borders left"></div>
+            <h1 class="tale-container animate-title">
+                <p class="tale shadows">T</p>
+                <p class="dot">.</p>
+                <p class="tale shadows">A</p>
+                <p class="dot">.</p>
+                <p class="tale shadows">L</p>
+                <p class="dot">.</p>
+                <p class="tale shadows">E</p>
+            </h1> 
+            <div class="hidden animate-borders right"></div>
+            <div class="sub-title-container">
+                <h2 class="sub-title">
+                    T.A.L.E will translate your message so that you can make new friends on Discord without the worry of a
+                </h2>
+                <h2 class="sub-title">
+                    ✨ language barrier ✨
+                </h2>
+            </div>
+            <!-- Button to add to server -->
+            <div class="button-container">
+                <button class="add-to-server">Add to Server</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- * Main Body * -->
+
+    <svg class="svg-wavy" viewBox="0 0 1920 225" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 37.5001L53.3333 59.7001C106.667 86.0001 213.333 140 320 123.7C426.667 108 533.333 22.0001 640 11.7001C746.667 1.0001 853.333 65.0001 960 97.0001C1066.67 129 1173.33 129 1280 102.3C1386.67 76.0001 1493.33 22.0001 1600 6.30011C1706.67 -9.99989 1813.33 12.0001 1866.67 22.3001L1920 33.0001V225H1866.67C1813.33 225 1706.67 225 1600 225C1493.33 225 1386.67 225 1280 225C1173.33 225 1066.67 225 960 225C853.333 225 746.667 225 640 225C533.333 225 426.667 225 320 225C213.333 225 106.667 225 53.3333 225H0V37.5001Z" fill="#121212"/>
+    </svg>
+        
+
+    <!-- * Server Section * -->
+    <div class="server-container">
+        <div class="text-container">
+            <div class="border-bottom-h2">
+                <h2 class="underline-blue">Trusted</h2>
+                <h2 >to keep conversations going</h2>
+            </div>
+            <div class="description-servers">
+                <p>TALE is reaching more than x (number notation) users with over x (number notation) translated messages:</p>
+            </div>
+        </div>
+        <div class="server-list js-flickity" id="serverList" data-flickity='{"wrapAround": true, "autoPlay": 3000}'>
+            <div class="server-list-item">
+                <div class="server-list-item-image">
+                    <img src="https://picsum.photos/64/64" alt="Server Image" />
+                </div>
+                <div class="server-list-item-info">
+                    <h3 class="server-list-item-title">Server Name 1</h3>
+                    <ul>
+                        <li class="server-list-item-description">000,000</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="server-list-item">
+                <div class="server-list-item-image">
+                    <img src="https://picsum.photos/64/64" alt="Server Image" />
+                </div>
+                <div class="server-list-item-info">
+                    <h3 class="server-list-item-title">Server Name 2</h3>
+                    <ul>
+                        <li class="server-list-item-description">000,000</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="server-list-item">
+                <div class="server-list-item-image">
+                    <img src="https://picsum.photos/64/64" alt="Server Image" />
+                </div>
+                <div class="server-list-item-info">
+                    <h3 class="server-list-item-title">Server Name 3</h3>
+                    <ul>
+                        <li class="server-list-item-description">000,000</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="server-list-item">
+                <div class="server-list-item-image">
+                    <img src="https://picsum.photos/64/64" alt="Server Image" />
+                </div>
+                <div class="server-list-item-info">
+                    <h3 class="server-list-item-title">Server Name 4</h3>
+                    <ul>
+                        <li class="server-list-item-description">000,000</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="server-list-item">
+                <div class="server-list-item-image">
+                    <img src="https://picsum.photos/64/64" alt="Server Image" />
+                </div>
+                <div class="server-list-item-info">
+                    <h3 class="server-list-item-title">Server Name 5</h3>
+                    <ul>
+                        <li class="server-list-item-description">000,000</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="server-list-item">
+                <div class="server-list-item-image">
+                    <img src="https://picsum.photos/64/64" alt="Server Image" />
+                </div>
+                <div class="server-list-item-info">
+                    <h3 class="server-list-item-title">Server Name 6</h3>
+                    <ul>
+                        <li class="server-list-item-description">000,000</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="server-list-item">
+                <div class="server-list-item-image">
+                    <img src="https://picsum.photos/64/64" alt="Server Image" />
+                </div>
+                <div class="server-list-item-info">
+                    <h3 class="server-list-item-title">Server Name 7</h3>
+                    <ul>
+                        <li class="server-list-item-description">000,000</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="server-list-item">
+                <div class="server-list-item-image">
+                    <img src="https://picsum.photos/64/64" alt="Server Image" />
+                </div>
+                <div class="server-list-item-info">
+                    <h3 class="server-list-item-title">Server Name 8</h3>
+                    <ul>
+                        <li class="server-list-item-description">000,000</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="server-list-item">
+                <div class="server-list-item-image">
+                    <img src="https://picsum.photos/64/64" alt="Server Image" />
+                </div>
+                <div class="server-list-item-info">
+                    <h3 class="server-list-item-title">Server Name 9</h3>
+                    <ul>
+                        <li class="server-list-item-description">000,000</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="server-list-item">
+                <div class="server-list-item-image">
+                    <img src="https://picsum.photos/64/64" alt="Server Image" />
+                </div>
+                <div class="server-list-item-info">
+                    <h3 class="server-list-item-title">Server Name 10</h3>
+                    <ul>
+                        <li class="server-list-item-description">000,000</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <svg class="svg-wavy" viewBox="0 0 1920 232" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1920 193.359L1866.67 170.466C1813.33 143.344 1706.67 87.6563 1600 104.466C1493.33 120.656 1386.67 209.344 1280 219.966C1173.33 231 1066.67 165 960 132C853.333 99 746.667 99 640 126.534C533.333 153.656 426.667 209.344 320 225.534C213.333 242.344 106.667 219.656 53.3333 209.034L0 198V4.57764e-05H53.3333C106.667 4.57764e-05 213.333 4.57764e-05 320 4.57764e-05C426.667 4.57764e-05 533.333 4.57764e-05 640 4.57764e-05C746.667 4.57764e-05 853.333 4.57764e-05 960 4.57764e-05C1066.67 4.57764e-05 1173.33 4.57764e-05 1280 4.57764e-05C1386.67 4.57764e-05 1493.33 4.57764e-05 1600 4.57764e-05C1706.67 4.57764e-05 1813.33 4.57764e-05 1866.67 4.57764e-05H1920V193.359Z" fill="#121212"/>
+    </svg>
+
+    <!-- * Info Section * -->
+
+    <div class="info-container">
+        <div class="text-container">
+            <div class="border-bottom-h2">
+                <h2 class="underline-blue">Customizable</h2>
+                <h2 >Features</h2>
+            </div>
+            <div class="description-servers">
+                <p>Each feature of TALE is as customizable as possible</p>
+            </div>
+        </div>
+        <div class="feature-list">
+            <div class="feature-list-item">
+                <div class="feature-list-item-info">
+                    <h3 class="feature-list-item-title">Feature Name 1</h3>
+                    <ul>
+                        <li data-image="output" class="feature-list-item-description"><i class="far fa-star star-icon"></i> Easily style the output ></li>
+                        <li data-image="messages" class="feature-list-item-description"><i class="far fa-star star-icon"></i> Create info messages ></li>
+                        <li data-image="keywords" class="feature-list-item-description"><i class="far fa-star star-icon"></i> Send messages based on keywords ></li>
+                    </ul>
+                </div>
+                <div class="feature-list-item-image">
+                    <img class="feature-image" src="https://picsum.photos/id/1015/700/300" alt="Feature Image" data-feature-image="output" style="display: block;" />
+                    <img class="feature-image" src="https://picsum.photos/id/1016/700/300" alt="Feature Image" data-feature-image="messages" style="display: none;" />
+                    <img class="feature-image" src="https://picsum.photos/id/1018/700/300" alt="Feature Image" data-feature-image="keywords" style="display: none;" />
+                </div>
+            </div>
+            <div class="feature-list-item">
+                <div class="feature-list-item-info">
+                    <h3 class="feature-list-item-title">Feature Name 2</h3>
+                    <ul>
+                        <li class="feature-list-item-description" data-image="modules"><i class="far fa-star star-icon"></i>Description of Feature 1 ></li>
+                        <li class="feature-list-item-description" data-image="conditions"><i class="far fa-star star-icon"></i>Description of Feature 2 ></li>
+                        <li class="feature-list-item-description" data-image="automod"><i class="far fa-star star-icon"></i>Description of Feature 3 ></li>
+                    </ul>
+                </div>
+                <div class="feature-list-item-image">
+                    <img class="feature-image" src="https://picsum.photos/id/1015/700/300" alt="Feature Image" data-feature-image="modules" style="display: block;" />
+                    <img class="feature-image" src="https://picsum.photos/id/1016/700/300" alt="Feature Image" data-feature-image="conditions" style="display: none;" />
+                    <img class="feature-image" src="https://picsum.photos/id/1018/700/300" alt="Feature Image" data-feature-image="automod" style="display: none;" />
+                </div>
+            </div>
+            <div class="feature-list-item">
+                <div class="feature-list-item-info">
+                    <h3 class="feature-list-item-title">Feature Name 3</h3>
+                    <ul>
+                        <li class="feature-list-item-description" data-image="takes"><i class="far fa-star star-icon"></i>Description of Feature 1 ></li>
+                        <li class="feature-list-item-description" data-image="types"><i class="far fa-star star-icon"></i>Description of Feature 2 ></li>
+                        <li class="feature-list-item-description" data-image="channels"><i class="far fa-star star-icon"></i>Description of Feature 3 ></li>
+                    </ul>
+                </div>
+                <div class="feature-list-item-image">
+                    <img class="feature-image" src="https://picsum.photos/id/1015/700/300" alt="Feature Image" data-feature-image="takes" style="display: block;" />
+                    <img class="feature-image" src="https://picsum.photos/id/1016/700/300" alt="Feature Image" data-feature-image="types" style="display: none;" />
+                    <img class="feature-image" src="https://picsum.photos/id/1018/700/300" alt="Feature Image" data-feature-image="channels" style="display: none;" />
+                </div>
+            </div>
+            <div class="feature-list-item">
+                <div class="feature-list-item-info">
+                    <h3 class="feature-list-item-title">Feature Name 4</h3>
+                    <ul>
+                        <li class="feature-list-item-description" data-image="go"><i class="far fa-star star-icon"></i>Description of Feature 1 ></li>
+                        <li class="feature-list-item-description" data-image="bl-channel"><i class="far fa-star star-icon"></i>Description of Feature 2 ></li>
+                        <li class="feature-list-item-description" data-image="bl-channels"><i class="far fa-star star-icon"></i>Description of Feature 3 ></li>
+                    </ul>
+                </div>
+                <div class="feature-list-item-image">
+                    <img class="feature-image" src="https://picsum.photos/id/1015/700/300" alt="Feature Image" data-feature-image="go" style="display: block;" />
+                    <img class="feature-image" src="https://picsum.photos/id/1016/700/300" alt="Feature Image" data-feature-image="bl-channel" style="display: none;" />
+                    <img class="feature-image" src="https://picsum.photos/id/1018/700/300" alt="Feature Image" data-feature-image="bl-channels" style="display: none;" />
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <svg class="svg-wavy" viewBox="0 0 1920 225" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 37.5001L53.3333 59.7001C106.667 86.0001 213.333 140 320 123.7C426.667 108 533.333 22.0001 640 11.7001C746.667 1.0001 853.333 65.0001 960 97.0001C1066.67 129 1173.33 129 1280 102.3C1386.67 76.0001 1493.33 22.0001 1600 6.30011C1706.67 -9.99989 1813.33 12.0001 1866.67 22.3001L1920 33.0001V225H1866.67C1813.33 225 1706.67 225 1600 225C1493.33 225 1386.67 225 1280 225C1173.33 225 1066.67 225 960 225C853.333 225 746.667 225 640 225C533.333 225 426.667 225 320 225C213.333 225 106.667 225 53.3333 225H0V37.5001Z" fill="#121212"/>
+    </svg>
+
+    <!-- * Footer * -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <div class="footer-column">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#status">Status</a></li>
+                        <li><a href="#dashboard">Dashboard</a></li>
+                        <li><a href="#account">Account</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>T.A.L.E</h4>
+                    <ul>
+                        <li><a href="#invite">Invite bot</a></li>
+                        <li><a href="#support-server">Support Server</a></li>
+                        <li><a href="#docs">Documentations</a></li>
+                        <li><a href="#contact">Support Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Modules</h4>
+                    <ul>
+                        <li><a href="#server-management">Server Management</a></li>
+                        <li><a href="#translations">Translations</a></li>
+                        <li><a href="#moderation">Moderation</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-right">
+                <div class="footer-icons">
+                    <a href="https://github.com/JayNightmare" rel="noopener" target="_blank" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://discord.com/users/373097473553727488" rel="noopener" target="_blank" aria-label="Discord">
+                        <i class="fab fa-discord"></i>
+                    </a>
+                    <a href="https://x.com/JayNightmar3" rel="noopener" target="_blank" aria-label="Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/jordan-s-bell/" rel="noopener" target="_blank" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024</p>
+        </div>
+    </footer>
+</body>
+</html>

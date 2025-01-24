@@ -18,3 +18,43 @@ if (token) {
 } else {
     document.getElementById('discord-avatar').innerHTML = `<p>Error</p>`;
 }
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const userSection = document.getElementById('user-section');
+
+    try {
+        const response = await fetch('https://tale-fyp.onrender.com/api/auth/status', {
+            credentials: 'include', // Include cookies for authentication
+        });
+
+        const data = await response.json();
+
+        if (data.loggedIn) {
+            // User is logged in: Display profile picture
+            userSection.innerHTML = `
+                <div class="user-option">
+                    <img src="https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png" 
+                        alt="${data.username}" 
+                        class="nav-image" 
+                        style="border-radius: 50%; width: 48px; height: 48px;" />
+                </div>
+            `;
+        } else {
+            // User is not logged in: Display login button
+            userSection.innerHTML = `
+                <a class="user-option" href="https://tale-fyp.onrender.com/auth/discord">
+                    <button class="login-button" alt="Log In">Log In</button>
+                </a>
+            `;
+        }
+    } catch (error) {
+        console.error('Error fetching login status:', error);
+
+        // Fallback: Show login button
+        userSection.innerHTML = `
+            <a class="user-option" href="https://tale-fyp.onrender.com/auth/discord">
+                <button class="login-button" alt="Log In">Log In</button>
+            </a>
+        `;
+    }
+});
