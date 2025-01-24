@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const data = await response.json();
 
         if (data.loggedIn) {
+            console.log('User is logged in:', data.username);
             const avatar = data.avatar.startsWith("a_")
                 ? `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.gif`
                 : `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png`;
@@ -23,6 +24,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </div>
             `;
         } else {
+            console.log('User is not logged in');
             // User is not logged in: Display login button
             userSection.innerHTML = `
                 <a class="user-option" href="https://tale-fyp.onrender.com/auth/discord">
