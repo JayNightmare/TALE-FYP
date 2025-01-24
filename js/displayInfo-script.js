@@ -1,5 +1,20 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    const userSection = document.getElementById('user-section'); // Placeholder for user info
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+
+    if (token) {
+        // Store the token in localStorage
+        localStorage.setItem('auth_token', token);
+
+        // Remove the token from the URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
+    await fetchAndUpdateUserInfo();
+});
+
+async function fetchAndUpdateUserInfo() {
+    const userSection = document.getElementById('user-section');
 
     const token = localStorage.getItem('auth_token');
 
@@ -72,13 +87,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     
 
         console.log('Required elements found in the DOM.');
-        // Toggle dropdown menu when clicking on the profile picture
         profilePicture.addEventListener('click', () => {
             console.log('clicked');
             dropdownMenu.classList.toggle('show');
         });
 
-        // Hide dropdown menu if clicking outside of it
         document.addEventListener('click', (e) => {
             if (!dropdownMenu.contains(e.target) && e.target !== profilePicture) {
                 dropdownMenu.classList.remove('show');
@@ -91,24 +104,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             // Clear token from localStorage
             localStorage.removeItem('auth_token');
 
-            // Redirect to homepage or login page
+            // Redirect to homepage
             window.location.href = 'https://jaynightmare.github.io/TALE-FYP/screens/homepage/index.html';
         });
     } catch (error) {
         console.error('Error adding event listeners:', error);
     }
-});
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get('token');
-
-    if (token) {
-        // Store the token in localStorage
-        localStorage.setItem('auth_token', token);
-
-        // Remove the token from the URL to clean up
-        window.history.replaceState({}, document.title, window.location.pathname);
-    }
-});
+}
