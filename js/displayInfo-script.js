@@ -36,6 +36,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <img src="${avatar}"
                         alt="${data.username}"
                         class="nav-image"  />
+                    
+                    <div id="dropdown-menu" class="dropdown">
+                        <a href="/account.html" class="dropdown-item">Account</a>
+                        <a href="#" id="logout" class="dropdown-item">Logout</a>
+                    </div>
                 </div>
             `;
         } else {
