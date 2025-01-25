@@ -100,7 +100,7 @@ p {
     }
 }
 
-.account-header .account-avatar {
+.account-header .account-avatar img {
     width: 32px;
     height: 32px;
     border-radius: 50%;
