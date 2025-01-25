@@ -3,7 +3,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background-color: #121212;
+    background-color: #070707;
     color: white;
 }
 
@@ -21,7 +21,7 @@ p {
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    background-color: #181818;
+    background-color: #131313;
     border-bottom: 1px solid #333;
 }
 
@@ -70,17 +70,18 @@ p {
 .account-container {
     max-width: 500px;
     margin: 50px auto;
-    background-color: #181818;
     padding: 20px;
-    border-radius: 10px;
-    border: 1px solid #444; /* Solid inner border */
-    box-shadow: 0 0 10px 2px #4F46E5; /* Glowing blue outer border */
     text-align: center;
-    transition: box-shadow 0.3s ease; /* Smooth transition for hover effect */
+    transition: box-shadow 0.3s ease;
+
+    background: linear-gradient(#131313, #131313) padding-box,
+              linear-gradient(145deg, #000000, #4A81E6) border-box;
+    border-radius: 10px;
+    border: 1px solid transparent;
 }
 
 .account-container:hover {
-    box-shadow: 0 0 15px 4px #4F46E5; /* Slightly stronger glow on hover */
+    box-shadow: 0 0 15px 3px #4e46e57e;
 }
 
 .account-header {
