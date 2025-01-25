@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(response => response.json())
     .then(data => {
         if (!data.loggedIn) {
-            // Token is invalid or expired, redirect to login
             window.location.href = 'https://tale-fyp.onrender.com/auth/discord';
         }
     })
