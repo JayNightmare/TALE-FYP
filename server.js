@@ -29,7 +29,13 @@ passport.use(new DiscordStrategy({
     callbackURL: process.env.DISCORD_CALLBACK_URL,
     scope: ['identify', 'email', 'guilds'],
 }, (accessToken, refreshToken, profile, done) => {
-    done(null, profile); // Send user profile to the next middleware
+    const userData = {
+        username: profile.username,
+        id: profile.id,
+        avatar: profile.avatar,
+        access_token: accessToken, // Include access token for API calls
+    };
+    done(null, userData); // Send user profile to the next middleware
 }));
 
 passport.serializeUser((user, done) => done(null, user));
