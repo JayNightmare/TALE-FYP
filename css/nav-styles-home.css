@@ -4,6 +4,11 @@
     --font-inter: 'Inter', sans-serif;
 }
 
+a, a:-webkit-any-link {
+    text-decoration: none;
+    color: white;
+}
+
 body {
     background-color: #070707;
     margin: 0;
@@ -61,10 +66,12 @@ body {
 .option {
     cursor: pointer;
     border-bottom: 2px solid transparent;
+    transition: all 0.3s ease-in;
 }
 
 .option:hover {
     border-bottom: 2px solid white;
+    transition: all 0.3s ease-out;
 }
 
 .nav-right {
