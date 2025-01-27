@@ -6,17 +6,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get('token');
 
-    if (token) {
-        localStorage.setItem('auth_token', token);
-
-        window.history.replaceState({}, document.title, window.location.pathname);
-    }
-
-    await fetchAndUpdateUserInfo();
-
     const refreshIcon = document.getElementById('refresh-icon');
+    const refreshButton = document.getElementById('refresh-container');
+
     if (refreshIcon) {
-        refreshIcon.addEventListener('click', async () => {
+        refreshButton.addEventListener('click', async () => {
             console.log('Refresh icon clicked. Re-checking user info...');
 
             refreshIcon.style.animation = 'spin 1s linear infinite';
@@ -28,6 +22,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             }, 1000);
         });
     }
+
+    if (token) {
+        localStorage.setItem('auth_token', token);
+
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
+    await fetchAndUpdateUserInfo();
 });
 
 async function fetchAndUpdateUserInfo() {

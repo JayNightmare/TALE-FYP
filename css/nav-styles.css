@@ -73,7 +73,6 @@ body {
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 50px;
 
     .nav-image {
         border-radius: 5px;
@@ -116,6 +115,7 @@ body {
     width: 40px;
     height: 40px;
     background-color: #2c2f33;
+    border: transparent;
     border-radius: 50%;
     cursor: pointer;
     transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
@@ -145,6 +145,7 @@ body {
     width: 22px;
     height: 22px;
     pointer-events: none;
+    transform: scaleX(-1);
 }
 
 /* // */
