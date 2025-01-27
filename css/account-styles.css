@@ -82,7 +82,7 @@ p {
 }
 
 .delete-data p {
-    font-size: 11px;
+    font-size: 15px;
     color: #6F6F6F;
 }
 
@@ -175,10 +175,6 @@ p {
         flex-direction: column-reverse;
         align-items: center;
         text-align: center;
-    }
-
-    .delete-data p {
-        font-size: 15px;
     }
 }
 
