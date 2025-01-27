@@ -5,6 +5,7 @@ const DiscordStrategy = require('passport-discord').Strategy;
 const cors = require('cors');
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
+const axios = require('axios');
 
 const app = express();
 
@@ -67,24 +68,31 @@ app.get('/logout', (req, res) => {
 });
 
 // * Route: Check Auth Status
-app.get('/api/auth/status', (req, res) => {
+app.get('/api/auth/status', async (req, res) => {
     const authHeader = req.headers.authorization;
 
-    if (!authHeader) {
-        return res.json({ loggedIn: false });
-    }
+    if (!authHeader) return res.json({ loggedIn: false });
 
-    const token = authHeader.split(' ')[1]; // Extract token from "Bearer <token>"
+    const token = authHeader.split(' ')[1];
 
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET); // Decode and verify token
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
         console.log('Decoded token:', decoded);
+
+        const discordResponse = await axios.get('https://discord.com/api/v10/users/@me/guilds', {
+            headers: {
+                Authorization: `Bearer ${decoded.access_token}`,
+            },
+        });
+
+        const guilds = discordResponse.data;
 
         res.json({
             loggedIn: true,
             username: decoded.username,
             avatar: decoded.avatar,
             id: decoded.id,
+            guilds: guilds,
         });
     } catch (err) {
         console.error('Token verification failed:', err);
