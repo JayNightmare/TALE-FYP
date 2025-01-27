@@ -1,0 +1,52 @@
+/* Navbar Styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #131313;
+    border-bottom: 1px solid #333;
+}
+
+.nav-logo {
+    width: 80px;
+}
+
+.server-name {
+    display: flex;
+    align-items: center;
+}
+
+.server-name input {
+    padding: 5px 10px;
+    font-size: 14px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: #222;
+    color: white;
+    margin-right: 5px;
+}
+
+.server-name .search-button {
+    padding: 5px 10px;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #444;
+}
+
+/* // */
