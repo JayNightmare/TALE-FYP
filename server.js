@@ -71,13 +71,20 @@ app.get('/logout', (req, res) => {
 app.get('/api/auth/status', async (req, res) => {
     const authHeader = req.headers.authorization;
 
-    if (!authHeader) return res.json({ loggedIn: false });
+    if (!authHeader) {
+        return res.json({ loggedIn: false });
+    }
 
     const token = authHeader.split(' ')[1];
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         console.log('Decoded token:', decoded);
+
+        if (!decoded.access_token) {
+            console.error('Access token is missing in the decoded JWT');
+            return res.json({ loggedIn: false });
+        }
 
         const discordResponse = await axios.get('https://discord.com/api/v10/users/@me/guilds', {
             headers: {
@@ -95,7 +102,7 @@ app.get('/api/auth/status', async (req, res) => {
             guilds: guilds,
         });
     } catch (err) {
-        console.error('Token verification failed:', err);
+        console.error('Error:', err);
         res.json({ loggedIn: false });
     }
 });
