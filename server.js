@@ -33,9 +33,9 @@ passport.use(new DiscordStrategy({
         username: profile.username,
         id: profile.id,
         avatar: profile.avatar,
-        access_token: accessToken, // Include access token for API calls
+        access_token: process.env.JWT_SECRET,
     };
-    done(null, userData); // Send user profile to the next middleware
+    done(null, userData);
 }));
 
 passport.serializeUser((user, done) => done(null, user));
