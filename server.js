@@ -33,7 +33,7 @@ passport.use(new DiscordStrategy({
         username: profile.username,
         id: profile.id,
         avatar: profile.avatar,
-        access_token: process.env.JWT_SECRET,
+        access_token: accessToken,
     };
     done(null, userData);
 }));
@@ -53,14 +53,13 @@ app.get('/auth/discord/callback', passport.authenticate('discord', {
 }), (req, res) => {
     const user = req.user;
 
-    // Generate JWT
     const token = jwt.sign({
         username: user.username,
         id: user.id,
         avatar: user.avatar,
+        access_token: user.access_token,
     }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-    // Redirect with the token as a query parameter
     const redirectUrl = `https://jaynightmare.github.io/TALE-FYP/screens/callback/index.html?token=${token}`;
     res.redirect(redirectUrl);
 });
@@ -112,7 +111,6 @@ app.get('/api/auth/status', async (req, res) => {
         res.json({ loggedIn: false });
     }
 });
-
 
 // Start Server
 const PORT = process.env.PORT || 3000;
