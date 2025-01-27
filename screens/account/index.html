@@ -6,7 +6,8 @@
     <title>Account Page</title>
     <link rel="stylesheet" href="../../css/account-styles.css">
     <link rel="stylesheet" href="../../css/nav-styles-dash.css">
-    <script src="../../js/displayInfo-script.js" async crossorigin></script>
+    <script src="../../js/displayInfo-script.js"></script>
+    <script src="../../js/accountInfo-script.js"></script>
 </head>
 <body>
     <header>
@@ -31,11 +32,9 @@
     <main>
         <div class="account-container">
             <div class="account-header">
-                <h2>Logged in as <span class="username">Username</span></h2>
+                <h2>Logged in as <span class="username">Loading...</span></h2>
                 <div class="account-avatar" id="avatar-section">
-                    <!-- TODO : Add Avatar Image -->
-                    <!-- Placeholder for Login Button or Profile Picture -->
-                    <p id="loading">Loading</p>
+                    <img id="avatar-image" src="" alt="Profile Picture" style="display: none;" />
                 </div>
             </div>
             <div class="account-info">
@@ -47,7 +46,10 @@
                 <div class="delete-data">
                     <h3>Delete User Data?</h3>
                     <p>Doing so will delete all instances of your user data from the database</p>
-                    <input type="checkbox">
+                    <label class="styled-checkbox">
+                        <input type="checkbox" id="delete-checkbox">
+                        <span class="checkmark"></span>
+                    </label>
                 </div>
             </div>
             <button class="logout-button" id="logout">Logout?</button>
@@ -56,5 +58,6 @@
 
     <!-- ! GUARD SCRIPT ! -->
     <!-- <script src="../../js/authGuard.js"></script> -->
+    <script src="../../js/logout-script.js"></script>
 </body>
 </html>

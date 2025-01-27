@@ -101,40 +101,89 @@ p {
     background-color: #d62828;
 }
 
-.nav-right img {
-    border-radius: 5px;
-    width: 48px;
-    height: 48px;
+/* Checkbox Styling */
+.styled-checkbox {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 20px;
+    margin-top: 10px;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
-.dropdown {
+/* Hide default checkbox */
+.styled-checkbox input {
     position: absolute;
-    top: 85px;
-    right: 12px;
-    background-color: #1e1e1e;
-    border: 1px solid #333;
-    border-radius: 5px;
-    min-width: 150px;
-    z-index: 1000;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create custom checkbox */
+.styled-checkbox .checkmark {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    background-color: #fff;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+/* Checkmark hover effect */
+.styled-checkbox:hover .checkmark {
+    background-color: #acacac;
+}
+
+/* When checkbox is checked */
+.styled-checkbox input:checked ~ .checkmark {
+    background-color: #4A81E6;
+    border-color: #4A81E6;
+}
+
+/* Add a checkmark when checked */
+.styled-checkbox .checkmark:after {
+    content: "";
+    position: absolute;
     display: none;
+    left: 9px;
+    top: 5px;
+    width: 4px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
 }
 
-.dropdown-item {
+/* Show checkmark when checked */
+.styled-checkbox input:checked ~ .checkmark:after {
     display: block;
-    padding: 10px 20px;
-    color: white;
-    text-decoration: none;
-    font-size: 14px;
-    transition: background-color 0.3s ease;
 }
 
-.dropdown-item:hover {
-    background-color: #5865F2;
-    color: white;
+/* if screen is in portrait mode, media query will kick in */
+@media only screen and (max-width: 768px) {
+    .account-container {
+        margin: 50px auto;
+    }
+
+    .nav-middle {
+        display: none;
+    }
+
+    .account-container .account-info {
+        flex-direction: column-reverse;
+        align-items: center;
+        text-align: center;
+    }
+
+    .delete-data p {
+        font-size: 15px;
+    }
 }
 
-/* Show dropdown menu */
-.dropdown.show {
-    display: block;
+@media only screen and (max-width: 580px) {
+    .account-container {
+        margin: 50px 20px;
+    }
 }
