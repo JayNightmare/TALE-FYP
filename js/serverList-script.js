@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
+    // Display a loading indicator while fetching the server list
+    serverList.innerHTML = `<p>Loading servers...</p>`;
+
     try {
         const response = await fetch('https://tale-fyp.onrender.com/api/auth/guilds', {
             method: 'GET',
@@ -17,32 +20,34 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const data = await response.json();
 
+        // Handle the case where the server list is empty
         if (data.guilds && data.guilds.length > 0) {
-            serverList.innerHTML = '';
+            serverList.innerHTML = ''; // Clear the loading message
 
             data.guilds.forEach(guild => {
-                const guildIcon = guild.icon
-                    ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`
-                    : `https://cdn.discordapp.com/embed/avatars/0.png`;
+                const guildIcon = guild.icon.startsWith("a_")
+                    ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.gif`
+                    : `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`
 
-                const serverItem = document.createElement('div');
-                serverItem.className = 'server-item';
-
-                serverItem.innerHTML = `
-                    <img src="${guildIcon}" alt="${guild.name}" class="server-icon">
-                    <div class="server-name">${guild.name}</div>
-                    <button class="server-button" data-id="${guild.id}">Manage</button>
+                // Create the server item element
+                const serverItem = `
+                    <div class="server-item" data-id="${guild.id}">
+                        <img src="${guildIcon}" alt="${guild.name}" class="server-icon">
+                        <div class="server-name">${guild.name}</div>
+                        <button class="server-button">Manage</button>
+                    </div>
                 `;
 
-                serverList.appendChild(serverItem);
+                serverList.innerHTML += serverItem;
             });
 
-            document.querySelectorAll('.server-button').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const serverId = e.target.dataset.id;
+            // Add a single event listener for the server list container
+            serverList.addEventListener('click', (e) => {
+                if (e.target.classList.contains('server-button')) {
+                    const serverId = e.target.closest('.server-item').dataset.id;
                     console.log(`Selected server ID: ${serverId}`);
                     window.location.href = `https://jaynightmare.github.io/TALE-FYP/screens/dashboard/index.html/${serverId}`;
-                });
+                }
             });
         } else {
             serverList.innerHTML = `<p>No servers available with Manage Server permission.</p>`;

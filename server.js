@@ -6,8 +6,10 @@ const cors = require('cors');
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
+const NodeCache = require('node-cache');
 
 const app = express();
+const serverCache = new NodeCache({ stdTTL: 900 }); // 15 minutes
 
 // * Session Configuration
 app.use(session({
@@ -174,6 +176,62 @@ app.get('/api/server/:serverId', async (req, res) => {
     } catch (error) {
         console.error('Error fetching server info:', error);
         res.status(500).json({ success: false, message: 'Internal Server Error' });
+    }
+});
+
+// * Middleware to decode and validate JWT
+const authenticate = (req, res, next) => {
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader) {
+        return res.status(401).json({ success: false, message: 'Unauthorized' });
+    }
+
+    const token = authHeader.split(' ')[1];
+    try {
+        req.user = jwt.verify(token, process.env.JWT_SECRET);
+        next();
+    } catch (error) {
+        return res.status(401).json({ success: false, message: 'Invalid token' });
+    }
+};
+
+// * Endpoint to fetch user's servers
+app.get('/api/user/servers', authenticate, async (req, res) => {
+    const { id, access_token } = req.user;
+
+    const cachedServers = serverCache.get(id);
+    if (cachedServers) {
+        return res.json({ success: true, servers: cachedServers });
+    }
+
+    try {
+        let allServers = [];
+        let after = null; // Pagination cursor
+
+        do {
+            const response = await axios.get('https://discord.com/api/v10/users/@me/guilds', {
+                headers: { Authorization: `Bearer ${access_token}` },
+                params: { limit: 100, after },
+            });
+
+            const servers = response.data;
+
+            const manageableServers = servers.filter(server =>
+                (server.permissions & 0x20) === 0x20
+            );
+
+            allServers = allServers.concat(manageableServers);
+
+            after = servers.length > 0 ? servers[servers.length - 1].id : null;
+        } while (after); // Stop when no more servers
+
+        serverCache.set(id, allServers);
+
+        res.json({ success: true, servers: allServers });
+    } catch (error) {
+        console.error('Error fetching user servers:', error.response?.data || error.message);
+        res.status(500).json({ success: false, message: 'Failed to fetch servers' });
     }
 });
 
