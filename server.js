@@ -118,24 +118,28 @@ app.get('/api/auth/status', authenticate, async (req, res) => {
 // * Route: Fetch User Guilds
 app.get("/api/auth/guilds", authenticate, async (req, res) => {
     const { access_token } = req.user;
-    const limit = parseInt(req.query.limit, 10) || 10; // Default to 10 servers per request
-    const after = req.query.after || null; // Cursor for pagination
+    const limit = parseInt(req.query.limit, 10) || 200;
+
+    let after = req.query.after || null;
+    let allGuilds = [];
 
     try {
-        const response = await axios.get('https://discord.com/api/v10/users/@me/guilds', {
-            headers: { Authorization: `Bearer ${access_token}` },
-            params: { limit, after },
-        });
+        do {
+            const response = await axios.get('https://discord.com/api/v10/users/@me/guilds', {
+                headers: { Authorization: `Bearer ${access_token}` },
+                params: { limit, after },
+            });
 
-        const guilds = response.data;
+            const guilds = response.data;
 
-        // Filter manageable servers (Manage Server permission: 0x20)
-        const manageableGuilds = guilds.filter((guild) => (guild.permissions & 0x20) === 0x20);
+            const manageableGuilds = guilds.filter((guild) => (guild.permissions & 0x20) === 0x20);
+            allGuilds = allGuilds.concat(manageableGuilds);
 
-        // Send manageable servers along with the `after` cursor
-        const nextAfter = guilds.length > 0 ? guilds[guilds.length - 1].id : null;
+            after = guilds.length > 0 ? guilds[guilds.length - 1].id : null;
 
-        res.json({ guilds: manageableGuilds, nextAfter });
+        } while (after);
+
+        res.json({ guilds: allGuilds });
     } catch (error) {
         if (error.response?.status === 429) {
             const retryAfter = error.response.data.retry_after || 1;

@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fetch and display servers
     const fetchAndDisplayServers = async () => {
+        console.log('Fetching servers...');
         if (isLoading) return;
         isLoading = true;
 
