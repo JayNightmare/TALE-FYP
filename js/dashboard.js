@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
 
-        const response = await fetch(`https://tale-fyp.onrender.com/api/server/${serverId}`, {
+        const response = await fetch(`https://tale-fyp.onrender.com/api/auth/guilds/${serverId}`, {
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${token}`,
