@@ -87,6 +87,51 @@ p {
     background-color: #365dab;
 }
 
+/* Server Input */
+.server-input-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.server-input-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.server-input-container label {
+    margin-bottom: 10px;
+}
+
+.server-input-container input {
+    padding: 10px;
+    border: 1px solid #4a81e6;
+    border-radius: 5px;
+    background-color: #1e1e1e;
+    color: white;
+}
+
+.server-input-container input::placeholder {
+    color: #4a81e6;
+}
+
+.server-input-container button {
+    margin-top: 10px;
+    padding: 10px;
+    width: 35px;
+    height: 35px;
+    background-color: #4a81e6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.server-input-container button:hover {
+    background-color: #365dab;
+    transition: background-color 0.2s ease;
+}
+
 @media only screen and (max-width: 768px) {
     .server-container {
         margin: 50px auto;

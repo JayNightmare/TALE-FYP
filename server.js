@@ -212,7 +212,7 @@ app.get('/api/user/servers', authenticate, async (req, res) => {
         do {
             const response = await axios.get('https://discord.com/api/v10/users/@me/guilds', {
                 headers: { Authorization: `Bearer ${access_token}` },
-                params: { limit: 100, after },
+                params: { limit: 10, after },
             });
 
             const servers = response.data;
@@ -224,7 +224,7 @@ app.get('/api/user/servers', authenticate, async (req, res) => {
             allServers = allServers.concat(manageableServers);
 
             after = servers.length > 0 ? servers[servers.length - 1].id : null;
-        } while (after); // Stop when no more servers
+        } while (after);
 
         serverCache.set(id, allServers);
 
@@ -232,6 +232,41 @@ app.get('/api/user/servers', authenticate, async (req, res) => {
     } catch (error) {
         console.error('Error fetching user servers:', error.response?.data || error.message);
         res.status(500).json({ success: false, message: 'Failed to fetch servers' });
+    }
+});
+
+app.get('/api/auth/guilds/:id', async (req, res) => {
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader) {
+        return res.status(401).json({ message: 'Unauthorized' });
+    }
+
+    const token = authHeader.split(' ')[1];
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        const response = await axios.get(`https://discord.com/api/v10/guilds/${req.params.id}`, {
+            headers: {
+                Authorization: `Bearer ${decoded.access_token}`,
+            },
+        });
+
+        const guild = response.data;
+
+        // Check if the user has the "Manage Server" permission (bitwise 0x20)
+        const manageServerPermission = (guild.permissions & 0x20) === 0x20;
+
+        res.json({
+            id: guild.id,
+            name: guild.name,
+            icon: guild.icon,
+            canManage: manageServerPermission,
+        });
+    } catch (error) {
+        console.error('Error fetching server by ID:', error);
+        res.status(400).json({ message: 'Failed to fetch server or insufficient permissions.' });
     }
 });
 
