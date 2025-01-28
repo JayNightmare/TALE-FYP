@@ -201,7 +201,7 @@ app.get('/api/auth/guilds/:id', authenticate, async (req, res) => {
         const guild = guilds.find((g) => g.id === id);
 
         if (!guild) {
-            return res.status(404).json({ message: 'Guild not found or you do not have access.' });
+            return res.status(404).json({ message: 'Guild not found or you do not have access' });
         }
 
         // Check if the user has Manage Server permission

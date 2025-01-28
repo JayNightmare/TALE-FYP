@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.target.classList.contains('server-button')) {
                 const serverId = e.target.closest('.server-item').dataset.id;
                 console.log(`Selected server ID: ${serverId}`);
-                window.location.href = `https://jaynightmare.github.io/TALE-FYP/screens/dashboard/index.html?${serverId}`;
+                window.location.href = `https://jaynightmare.github.io/TALE-FYP/screens/dashboard/index.html?serverId=${serverId}`;
             }
         });
     };
