@@ -161,7 +161,6 @@ p {
     display: block;
 }
 
-/* if screen is in portrait mode, media query will kick in */
 @media only screen and (max-width: 768px) {
     .account-container {
         margin: 50px auto;

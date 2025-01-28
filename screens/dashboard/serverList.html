@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account Page</title>
-    <link rel="stylesheet" href="../../css/dashboard-styles.css">
+    <link rel="stylesheet" href="../../css/serverList-styles.css">
     <link rel="stylesheet" href="../../css/nav-styles-dash.css">
-    <script src="../../js/displayInfo-script.js"></script>
+    <script src="../../js/displayInfo-script.js" async></script>
+    <script src="../../js/serverList-script.js" async></script>
 </head>
 <body>
     <header>
@@ -30,16 +31,16 @@
     </header>
 
     <main>
-        <div class="dashboard-container">
-            <h2>Selected Server</h2>
-            <div id="server-info">
-                <p>Loading server info...</p>
+        <div class="server-container">
+            <h2>Select a Server to Manage</h2>
+            <div class="server-list" id="server-list">
+                <p>Loading servers...</p>
             </div>
         </div>
     </main>
-
+    
     <!-- ! GUARD SCRIPTS ! -->
     <!-- <script src="../../js/authGuard.js"></script> -->
     <script src="../../js/logout-script.js"></script>
-    <script src="../../js/dashboard.js" async></script>
+    <script src="../../js/serverIn-script.js"></script>
 </body>

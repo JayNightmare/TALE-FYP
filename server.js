@@ -112,6 +112,71 @@ app.get('/api/auth/status', async (req, res) => {
     }
 });
 
+app.get('/api/auth/guilds', async (req, res) => {
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader) {
+        return res.status(401).json({ message: 'Unauthorized' });
+    }
+
+    const token = authHeader.split(' ')[1];
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        console.log('Decoded token:', decoded);
+
+        const discordResponse = await axios.get('https://discord.com/api/v10/users/@me/guilds', {
+            headers: {
+                Authorization: `Bearer ${decoded.access_token}`,
+            },
+        });
+
+        const guilds = discordResponse.data;
+
+        // Filter guilds where the user has Manage Server permission
+        const manageServerGuilds = guilds.filter(guild => (guild.permissions & 0x20) === 0x20);
+
+        res.json({ guilds: manageServerGuilds });
+    } catch (err) {
+        console.error('Error fetching guilds:', err);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
+
+app.get('/api/server/:serverId', async (req, res) => {
+    const { serverId } = req.params;
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader) {
+        return res.status(401).json({ success: false, message: 'Unauthorized' });
+    }
+
+    const token = authHeader.split(' ')[1];
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        // Fetch user's guilds to verify access
+        const discordResponse = await axios.get('https://discord.com/api/v10/users/@me/guilds', {
+            headers: {
+                Authorization: `Bearer ${decoded.access_token}`,
+            },
+        });
+
+        const guilds = discordResponse.data;
+        const guild = guilds.find(g => g.id === serverId);
+
+        if (!guild) {
+            return res.status(403).json({ success: false, message: 'You do not have access to this server.' });
+        }
+
+        res.json({ success: true, serverName: guild.name });
+    } catch (error) {
+        console.error('Error fetching server info:', error);
+        res.status(500).json({ success: false, message: 'Internal Server Error' });
+    }
+});
+
 // Start Server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
