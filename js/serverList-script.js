@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('auth_token');
 
     if (!token) {
-        serverList.innerHTML = `<p>You need to log in to view your servers.</p>`;
+        serverList.innerHTML = `<p>You need to log in to view your servers</p>`;
         return;
     }
 
@@ -14,9 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         const response = await fetch('https://tale-fyp.onrender.com/api/auth/guilds', {
             method: 'GET',
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
+            headers: { Authorization: `Bearer ${token}` },
         });
 
         const data = await response.json();
@@ -24,6 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (data.guilds && data.guilds.length > 0) {
             serverList.innerHTML = '';
 
+            // Only display the first 10 servers
             const displayedGuilds = data.guilds.slice(0, 10);
             displayedGuilds.forEach((guild) => {
                 addServerToList(guild, serverList);
@@ -31,11 +30,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             attachServerClickHandler(serverList);
         } else {
-            serverList.innerHTML = `<p>No servers available with Manage Server permission.</p>`;
+            serverList.innerHTML = `<p>No servers available with Manage Server permission</p>`;
         }
     } catch (error) {
         console.error('Error fetching servers:', error);
-        serverList.innerHTML = `<p>Failed to load servers. Please try again later.</p>`;
+        serverList.innerHTML = `<p>Failed to load servers. Please try again later</p>`;
     }
 
     serverInputForm.addEventListener('submit', async (e) => {
@@ -43,17 +42,21 @@ document.addEventListener('DOMContentLoaded', async () => {
         const serverId = serverInputField.value.trim();
 
         if (!serverId) {
-            alert('Please enter a valid server ID.');
+            alert('Please enter a valid server ID');
             return;
         }
 
         try {
             const response = await fetch(`https://tale-fyp.onrender.com/api/auth/guilds/${serverId}`, {
                 method: 'GET',
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+                headers: { Authorization: `Bearer ${token}` },
             });
+
+            if (response.status === 429) {
+                const { retry_after } = await response.json();
+                alert(`Rate limited. Please try again after ${retry_after} seconds`);
+                return;
+            }
 
             const guild = await response.json();
 
@@ -61,11 +64,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                 addServerToList(guild, serverList, true);
                 alert(`Server "${guild.name}" added to the list!`);
             } else {
-                alert('You do not have permission to manage this server.');
+                alert('You do not have permission to manage this server');
             }
         } catch (error) {
             console.error('Error fetching server by ID:', error);
-            alert('Failed to fetch the server. Please ensure the server ID is correct.');
+            alert('Failed to fetch the server. Please ensure the server ID is correct');
         }
 
         serverInputField.value = '';
@@ -73,9 +76,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 function addServerToList(guild, serverList, addToTop = false) {
-    const guildIcon = guild.icon.startsWith("a_")
-        ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.gif`
-        : `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`;
+    const guildIcon = guild.icon
+        ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`
+        : `https://cdn.discordapp.com/embed/avatars/0.png`;
 
     const serverItem = `
         <div class="server-item" data-id="${guild.id}">

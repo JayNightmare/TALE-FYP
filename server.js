@@ -205,33 +205,35 @@ app.get('/api/user/servers', authenticate, async (req, res) => {
 });
 
 // * Route: Fetch Specific Guild
-app.get("/api/auth/guilds/:id", authenticate, async (req, res) => {
+app.get('/api/auth/guilds/:id', authenticate, async (req, res) => {
     const { id } = req.params;
     const { access_token } = req.user;
 
     try {
-        const response = await axios.get(
-            `https://discord.com/api/v10/guilds/${id}`,
-            {
-                headers: { Authorization: `Bearer ${access_token}` },
-            }
-        );
+        const response = await axios.get(`https://discord.com/api/v10/guilds/${id}`, {
+            headers: { Authorization: `Bearer ${access_token}` },
+        });
 
         const guild = response.data;
-        const managePermission = (guild.permissions & 0x20) === 0x20;
+        const canManage = (guild.permissions & 0x20) === 0x20;
 
         res.json({
             id: guild.id,
             name: guild.name,
             icon: guild.icon,
-            canManage: managePermission,
+            canManage,
         });
     } catch (error) {
-        console.error("Error fetching guild by ID:", error);
-        res.status(400).json({
-            success: false,
-            message: "Failed to fetch guild or insufficient permissions.",
-        });
+        if (error.response?.status === 429) {
+            const retryAfter = error.response.data.retry_after || 1;
+            console.error(`Rate limited. Retry after ${retryAfter} seconds`);
+            return res.status(429).json({
+                message: 'Rate limited. Please try again later',
+                retry_after: retryAfter,
+            });
+        }
+        console.error('Error fetching guild by ID:', error.response?.data || error.message);
+        res.status(500).json({ message: 'Failed to fetch server or insufficient permissions.' });
     }
 });
 
