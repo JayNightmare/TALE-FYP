@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const serverInfoDiv = document.getElementById('server-info');
 
     // Extract the serverId from the URL
-    const serverId = window.location.pathname.split('?').pop();
+    const serverId = new URLSearchParams(window.location.search).get('serverId');
     console.log('Selected Server ID:', serverId);
 
     if (!serverId) {
@@ -29,13 +29,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const data = await response.json();
 
-        if (data.success) {
+        if (response.ok) {
             // Display server info
             serverInfoDiv.innerHTML = `
-                <p><strong>Server Name:</strong> ${data.serverName}</p>
-                <p><strong>Server ID:</strong> ${serverId}</p>
+                <p><strong>Server Name:</strong> ${data.name}</p>
+                <p><strong>Server ID:</strong> ${data.id}</p>
+                <p><strong>Manage Server Permission:</strong> ${
+                    data.canManage ? 'Yes' : 'No'
+                }</p>
             `;
         } else {
+            console.error('Error:', data.message);
             serverInfoDiv.innerHTML = `<p>Error: ${data.message}</p>`;
         }
     } catch (error) {

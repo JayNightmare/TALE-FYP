@@ -192,11 +192,19 @@ app.get('/api/auth/guilds/:id', authenticate, async (req, res) => {
     const { access_token } = req.user;
 
     try {
-        const response = await axios.get(`https://discord.com/api/v10/guilds/${id}`, {
+        // Fetch guild data from Discord API
+        const response = await axios.get(`https://discord.com/api/v10/users/@me/guilds`, {
             headers: { Authorization: `Bearer ${access_token}` },
         });
 
-        const guild = response.data;
+        const guilds = response.data;
+        const guild = guilds.find((g) => g.id === id);
+
+        if (!guild) {
+            return res.status(404).json({ message: 'Guild not found or you do not have access.' });
+        }
+
+        // Check if the user has Manage Server permission
         const canManage = (guild.permissions & 0x20) === 0x20;
 
         res.json({
@@ -218,6 +226,7 @@ app.get('/api/auth/guilds/:id', authenticate, async (req, res) => {
         res.status(500).json({ message: 'Failed to fetch server or insufficient permissions' });
     }
 });
+
 
 // Start Server
 const PORT = process.env.PORT || 3000;
