@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const serverInfoDiv = document.getElementById('server-info');
 
     // Extract the serverId from the URL
-    const serverId = new URLSearchParams(window.location.search).get('serverId');
+    const serverId = window.location.pathname.split('?').pop();
     console.log('Selected Server ID:', serverId);
 
     if (!serverId) {
