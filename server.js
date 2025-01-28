@@ -96,18 +96,37 @@ app.get('/api/auth/status', authenticate, async (req, res) => {
     const { username, avatar, id } = req.user;
 
     try {
+        // Check if guilds for this user are already in cache
+        const cachedGuilds = serverCache.get(id);
+        if (cachedGuilds) {
+            return res.json({
+                loggedIn: true,
+                username,
+                avatar,
+                id,
+                guilds: cachedGuilds, // Serve cached guilds
+            });
+        }
+
+        // Fetch guilds from Discord API
         const response = await axios.get('https://discord.com/api/v10/users/@me/guilds', {
-        headers: { Authorization: `Bearer ${req.user.access_token}` },
+            headers: { Authorization: `Bearer ${req.user.access_token}` },
         });
 
         const guilds = response.data;
 
+        // Filter manageable servers (Manage Server permission: 0x20)
+        const manageableGuilds = guilds.filter((guild) => (guild.permissions & 0x20) === 0x20);
+
+        // Store manageable guilds in cache
+        serverCache.set(id, manageableGuilds);
+
         res.json({
-        loggedIn: true,
-        username,
-        avatar,
-        id,
-        guilds,
+            loggedIn: true,
+            username,
+            avatar,
+            id,
+            guilds: manageableGuilds,
         });
     } catch (error) {
         console.error('Error fetching guilds:', error);
@@ -115,41 +134,17 @@ app.get('/api/auth/status', authenticate, async (req, res) => {
     }
 });
 
-// * Route: Fetch User Guilds
-app.get("/api/auth/guilds", authenticate, async (req, res) => {
-    const { access_token } = req.user;
-    const limit = parseInt(req.query.limit, 10) || 200;
+// * Route: Fetch User Guilds from Cache
+app.get("/api/auth/guilds", authenticate, (req, res) => {
+    const { id } = req.user;
 
-    let after = req.query.after || null;
-    let allGuilds = [];
-
-    try {
-        do {
-            const response = await axios.get('https://discord.com/api/v10/users/@me/guilds', {
-                headers: { Authorization: `Bearer ${access_token}` },
-                params: { limit, after },
-            });
-
-            const guilds = response.data;
-
-            const manageableGuilds = guilds.filter((guild) => (guild.permissions & 0x20) === 0x20);
-            allGuilds = allGuilds.concat(manageableGuilds);
-
-            after = guilds.length > 0 ? guilds[guilds.length - 1].id : null;
-
-        } while (after);
-
-        res.json({ guilds: allGuilds });
-    } catch (error) {
-        if (error.response?.status === 429) {
-            const retryAfter = error.response.data.retry_after || 1;
-            console.error(`Rate limited. Retry after ${retryAfter} seconds.`);
-            return res.status(429).json({ message: 'Rate limited', retry_after: retryAfter });
-        }
-
-        console.error('Error fetching guilds:', error.response?.data || error.message);
-        res.status(500).json({ message: 'Failed to fetch servers' });
+    // Fetch cached guilds
+    const cachedGuilds = serverCache.get(id);
+    if (cachedGuilds) {
+        return res.json({ guilds: cachedGuilds });
     }
+
+    res.status(404).json({ message: 'No cached guilds found. Please refresh your session.' });
 });
 
 // * Endpoint to fetch user's servers
@@ -163,7 +158,7 @@ app.get('/api/user/servers', authenticate, async (req, res) => {
 
     try {
         let allServers = [];
-        let after = null; // Pagination cursor
+        let after = null;
 
         do {
             const response = await axios.get('https://discord.com/api/v10/users/@me/guilds', {
