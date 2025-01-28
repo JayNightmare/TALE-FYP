@@ -144,7 +144,7 @@ app.get("/api/auth/guilds", authenticate, (req, res) => {
         return res.json({ guilds: cachedGuilds });
     }
 
-    res.status(404).json({ message: 'No cached guilds found. Please refresh your session.' });
+    res.status(404).json({ message: 'No cached guilds found. Please refresh your session' });
 });
 
 // * Endpoint to fetch user's servers
@@ -215,7 +215,7 @@ app.get('/api/auth/guilds/:id', authenticate, async (req, res) => {
             });
         }
         console.error('Error fetching guild by ID:', error.response?.data || error.message);
-        res.status(500).json({ message: 'Failed to fetch server or insufficient permissions.' });
+        res.status(500).json({ message: 'Failed to fetch server or insufficient permissions' });
     }
 });
 

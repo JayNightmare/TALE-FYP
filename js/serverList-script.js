@@ -3,11 +3,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const serverInputForm = document.getElementById('server-input-form');
     const serverInputField = document.getElementById('server-id-input');
     const loadMoreButton = document.getElementById('load-more-button');
-    const searchBar = document.querySelector('.server-name input'); // Search bar input
+    const searchBar = document.querySelector('.server-name input');
     const token = localStorage.getItem('auth_token');
 
     if (!token) {
-        serverList.innerHTML = `<p>You need to log in to view your servers.</p>`;
+        serverList.innerHTML = `<p>You need to log in to view your servers</p>`;
         return;
     }
 
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const response = await fetch(
-                `https://tale-fyp.onrender.com/api/auth/guilds?limit=10&after=${nextAfter || ''}`,
+                `https://tale-fyp.onrender.com/api/auth/guilds`,
                 {
                     method: 'GET',
                     headers: { Authorization: `Bearer ${token}` },
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (response.status === 429) {
                 const { retry_after } = await response.json();
-                alert(`Rate limited. Please try again after ${retry_after} seconds.`);
+                alert(`Rate limited. Please try again after ${retry_after} seconds`);
                 return;
             }
 
@@ -49,11 +49,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     loadMoreButton.style.display = 'none'; // Hide load more button when no more servers
                 }
             } else if (!nextAfter) {
-                serverList.innerHTML = `<p>No servers available with Manage Server permission.</p>`;
+                serverList.innerHTML = `<p>No servers available with Manage Server permission</p>`;
             }
         } catch (error) {
             console.error('Error fetching servers:', error);
-            serverList.innerHTML = `<p>Failed to load servers. Please try again later.</p>`;
+            serverList.innerHTML = `<p>Failed to load servers. Please try again later</p>`;
         } finally {
             isLoading = false;
         }
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
         serverList.innerHTML = '';
 
         if (servers.length === 0) {
-            serverList.innerHTML = `<p>No servers found.</p>`;
+            serverList.innerHTML = `<p>No servers found</p>`;
             return;
         }
 
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (response.status === 429) {
                 const { retry_after } = await response.json();
-                alert(`Rate limited. Please try again after ${retry_after} seconds.`);
+                alert(`Rate limited. Please try again after ${retry_after} seconds`);
                 return;
             }
 
@@ -150,11 +150,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderServerList(currentServers); // Re-render server list
                 alert(`Server "${guild.name}" added to the list!`);
             } else {
-                alert('You do not have permission to manage this server.');
+                alert('You do not have permission to manage this server');
             }
         } catch (error) {
             console.error('Error fetching server by ID:', error);
-            alert('Failed to fetch the server. Please ensure the server ID is correct.');
+            alert('Failed to fetch the server. Please ensure the server ID is correct');
         }
 
         serverInputField.value = '';

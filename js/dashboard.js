@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log('Selected Server ID:', serverId);
 
     if (!serverId) {
-        serverInfoDiv.innerHTML = `<p>Error: No server ID found.</p>`;
+        serverInfoDiv.innerHTML = `<p>Error: No server ID found</p>`;
         return;
     }
 
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if (!token) {
             console.error('No auth token found.');
-            serverInfoDiv.innerHTML = `<p>Error: You are not logged in.</p>`;
+            serverInfoDiv.innerHTML = `<p>Error: You are not logged in</p>`;
             return;
         }
 
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     } catch (error) {
         console.error('Error fetching server info:', error);
-        serverInfoDiv.innerHTML = `<p>Error fetching server info. Please try again later.</p>`;
+        serverInfoDiv.innerHTML = `<p>Error fetching server info. Please try again later</p>`;
     }
 
     // Logout button logic

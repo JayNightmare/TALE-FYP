@@ -16,7 +16,6 @@ p {
 }
 
 .dashboard-container {
-    background-color: #2e2e3e;
     padding: 20px;
     margin: 50px auto;
     border-radius: 10px;
@@ -24,4 +23,13 @@ p {
     max-width: 600px;
     text-align: center;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(#131313, #131313) padding-box,
+              linear-gradient(145deg, #000000, #4A81E6) border-box;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    transition: box-shadow 0.3s ease;
+}
+
+.dashboard-container:hover {
+    box-shadow: 0 0 15px 3px #4e46e57e;
 }
