@@ -132,6 +132,21 @@ p {
     transition: background-color 0.2s ease;
 }
 
+button.load-more {
+    background-color: #4a81e6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+button.load-more:hover {
+    background-color: #365dab;
+}
+
 @media only screen and (max-width: 768px) {
     .server-container {
         margin: 50px auto;

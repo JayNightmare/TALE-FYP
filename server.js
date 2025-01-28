@@ -117,51 +117,34 @@ app.get('/api/auth/status', authenticate, async (req, res) => {
 
 // * Route: Fetch User Guilds
 app.get("/api/auth/guilds", authenticate, async (req, res) => {
-    const { id, access_token } = req.user;
-
-    // Check cache for stored servers
-    const cachedGuilds = serverCache.get(id);
-    if (cachedGuilds) {
-        return res.json({ success: true, guilds: cachedGuilds });
-    }
+    const { access_token } = req.user;
+    const limit = parseInt(req.query.limit, 10) || 10; // Default to 10 servers per request
+    const after = req.query.after || null; // Cursor for pagination
 
     try {
-        let allGuilds = [];
-        let after = null;
-
-        do {
-            const response = await axios.get(
-                "https://discord.com/api/v10/users/@me/guilds",
-                {
-                    headers: { Authorization: `Bearer ${access_token}` },
-                    params: { limit: 10, after },
-                }
-            );
-
-            const guilds = response.data;
-
-            // Filter guilds where the user has "Manage Server" permission
-            const manageableGuilds = guilds.filter(
-                (guild) => (guild.permissions & 0x20) === 0x20
-            );
-
-            allGuilds = allGuilds.concat(manageableGuilds);
-            after = guilds.length > 0 ? guilds[guilds.length - 1].id : null;
-        } while (after);
-
-        // Cache the servers for the user
-        serverCache.set(id, allGuilds);
-
-        res.json({ success: true, guilds: allGuilds });
-    } catch (error) {
-        console.error(
-            "Error fetching guilds:",
-            error.response?.data || error.message
-        );
-        res.status(500).json({
-            success: false,
-            message: "Failed to fetch guilds",
+        const response = await axios.get('https://discord.com/api/v10/users/@me/guilds', {
+            headers: { Authorization: `Bearer ${access_token}` },
+            params: { limit, after },
         });
+
+        const guilds = response.data;
+
+        // Filter manageable servers (Manage Server permission: 0x20)
+        const manageableGuilds = guilds.filter((guild) => (guild.permissions & 0x20) === 0x20);
+
+        // Send manageable servers along with the `after` cursor
+        const nextAfter = guilds.length > 0 ? guilds[guilds.length - 1].id : null;
+
+        res.json({ guilds: manageableGuilds, nextAfter });
+    } catch (error) {
+        if (error.response?.status === 429) {
+            const retryAfter = error.response.data.retry_after || 1;
+            console.error(`Rate limited. Retry after ${retryAfter} seconds.`);
+            return res.status(429).json({ message: 'Rate limited', retry_after: retryAfter });
+        }
+
+        console.error('Error fetching guilds:', error.response?.data || error.message);
+        res.status(500).json({ message: 'Failed to fetch servers' });
     }
 });
 
