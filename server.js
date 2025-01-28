@@ -74,111 +74,6 @@ app.get('/logout', (req, res) => {
     });
 });
 
-// * Route: Check Auth Status
-app.get('/api/auth/status', async (req, res) => {
-    const authHeader = req.headers.authorization;
-
-    if (!authHeader) {
-        return res.json({ loggedIn: false });
-    }
-
-    const token = authHeader.split(' ')[1];
-
-    try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        console.log('Decoded token:', decoded);
-
-        if (!decoded.access_token) {
-            console.error('Access token is missing in the decoded JWT');
-            return res.json({ loggedIn: false });
-        }
-
-        const discordResponse = await axios.get('https://discord.com/api/v10/users/@me/guilds', {
-            headers: {
-                Authorization: `Bearer ${decoded.access_token}`,
-            },
-        });
-
-        const guilds = discordResponse.data;
-
-        res.json({
-            loggedIn: true,
-            username: decoded.username,
-            avatar: decoded.avatar,
-            id: decoded.id,
-            guilds: guilds,
-        });
-    } catch (err) {
-        console.error('Error:', err);
-        res.json({ loggedIn: false });
-    }
-});
-
-app.get('/api/auth/guilds', async (req, res) => {
-    const authHeader = req.headers.authorization;
-
-    if (!authHeader) {
-        return res.status(401).json({ message: 'Unauthorized' });
-    }
-
-    const token = authHeader.split(' ')[1];
-
-    try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        console.log('Decoded token:', decoded);
-
-        const discordResponse = await axios.get('https://discord.com/api/v10/users/@me/guilds', {
-            headers: {
-                Authorization: `Bearer ${decoded.access_token}`,
-            },
-        });
-
-        const guilds = discordResponse.data;
-
-        // Filter guilds where the user has Manage Server permission
-        const manageServerGuilds = guilds.filter(guild => (guild.permissions & 0x20) === 0x20);
-
-        res.json({ guilds: manageServerGuilds });
-    } catch (err) {
-        console.error('Error fetching guilds:', err);
-        res.status(500).json({ message: 'Internal Server Error' });
-    }
-});
-
-app.get('/api/server/:serverId', async (req, res) => {
-    const { serverId } = req.params;
-    const authHeader = req.headers.authorization;
-
-    if (!authHeader) {
-        return res.status(401).json({ success: false, message: 'Unauthorized' });
-    }
-
-    const token = authHeader.split(' ')[1];
-
-    try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-        // Fetch user's guilds to verify access
-        const discordResponse = await axios.get('https://discord.com/api/v10/users/@me/guilds', {
-            headers: {
-                Authorization: `Bearer ${decoded.access_token}`,
-            },
-        });
-
-        const guilds = discordResponse.data;
-        const guild = guilds.find(g => g.id === serverId);
-
-        if (!guild) {
-            return res.status(403).json({ success: false, message: 'You do not have access to this server.' });
-        }
-
-        res.json({ success: true, serverName: guild.name });
-    } catch (error) {
-        console.error('Error fetching server info:', error);
-        res.status(500).json({ success: false, message: 'Internal Server Error' });
-    }
-});
-
 // * Middleware to decode and validate JWT
 const authenticate = (req, res, next) => {
     const authHeader = req.headers.authorization;
@@ -195,6 +90,80 @@ const authenticate = (req, res, next) => {
         return res.status(401).json({ success: false, message: 'Invalid token' });
     }
 };
+
+// * Route: Check Auth Status
+app.get('/api/auth/status', authenticate, async (req, res) => {
+    const { username, avatar, id } = req.user;
+
+    try {
+        const response = await axios.get('https://discord.com/api/v10/users/@me/guilds', {
+        headers: { Authorization: `Bearer ${req.user.access_token}` },
+        });
+
+        const guilds = response.data;
+
+        res.json({
+        loggedIn: true,
+        username,
+        avatar,
+        id,
+        guilds,
+        });
+    } catch (error) {
+        console.error('Error fetching guilds:', error);
+        res.status(500).json({ loggedIn: false, message: 'Failed to fetch guilds' });
+    }
+});
+
+// * Route: Fetch User Guilds
+app.get("/api/auth/guilds", authenticate, async (req, res) => {
+    const { id, access_token } = req.user;
+
+    // Check cache for stored servers
+    const cachedGuilds = serverCache.get(id);
+    if (cachedGuilds) {
+        return res.json({ success: true, guilds: cachedGuilds });
+    }
+
+    try {
+        let allGuilds = [];
+        let after = null;
+
+        do {
+            const response = await axios.get(
+                "https://discord.com/api/v10/users/@me/guilds",
+                {
+                    headers: { Authorization: `Bearer ${access_token}` },
+                    params: { limit: 10, after },
+                }
+            );
+
+            const guilds = response.data;
+
+            // Filter guilds where the user has "Manage Server" permission
+            const manageableGuilds = guilds.filter(
+                (guild) => (guild.permissions & 0x20) === 0x20
+            );
+
+            allGuilds = allGuilds.concat(manageableGuilds);
+            after = guilds.length > 0 ? guilds[guilds.length - 1].id : null;
+        } while (after);
+
+        // Cache the servers for the user
+        serverCache.set(id, allGuilds);
+
+        res.json({ success: true, guilds: allGuilds });
+    } catch (error) {
+        console.error(
+            "Error fetching guilds:",
+            error.response?.data || error.message
+        );
+        res.status(500).json({
+            success: false,
+            message: "Failed to fetch guilds",
+        });
+    }
+});
 
 // * Endpoint to fetch user's servers
 app.get('/api/user/servers', authenticate, async (req, res) => {
@@ -235,38 +204,34 @@ app.get('/api/user/servers', authenticate, async (req, res) => {
     }
 });
 
-app.get('/api/auth/guilds/:id', async (req, res) => {
-    const authHeader = req.headers.authorization;
-
-    if (!authHeader) {
-        return res.status(401).json({ message: 'Unauthorized' });
-    }
-
-    const token = authHeader.split(' ')[1];
+// * Route: Fetch Specific Guild
+app.get("/api/auth/guilds/:id", authenticate, async (req, res) => {
+    const { id } = req.params;
+    const { access_token } = req.user;
 
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-        const response = await axios.get(`https://discord.com/api/v10/guilds/${req.params.id}`, {
-            headers: {
-                Authorization: `Bearer ${decoded.access_token}`,
-            },
-        });
+        const response = await axios.get(
+            `https://discord.com/api/v10/guilds/${id}`,
+            {
+                headers: { Authorization: `Bearer ${access_token}` },
+            }
+        );
 
         const guild = response.data;
-
-        // Check if the user has the "Manage Server" permission (bitwise 0x20)
-        const manageServerPermission = (guild.permissions & 0x20) === 0x20;
+        const managePermission = (guild.permissions & 0x20) === 0x20;
 
         res.json({
             id: guild.id,
             name: guild.name,
             icon: guild.icon,
-            canManage: manageServerPermission,
+            canManage: managePermission,
         });
     } catch (error) {
-        console.error('Error fetching server by ID:', error);
-        res.status(400).json({ message: 'Failed to fetch server or insufficient permissions.' });
+        console.error("Error fetching guild by ID:", error);
+        res.status(400).json({
+            success: false,
+            message: "Failed to fetch guild or insufficient permissions.",
+        });
     }
 });
 
