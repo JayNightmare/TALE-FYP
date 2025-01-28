@@ -67,7 +67,7 @@ p {
 }
 
 .sidebar-link:hover,
-.sidebar-item.active .sidebar-link,
+.active,
 .sidebar .home-button a:hover,
 .refresh-button:hover {
     background: linear-gradient(#161616, #161616) padding-box, linear-gradient(90deg, #736CE8, #4A81E6) border-box;

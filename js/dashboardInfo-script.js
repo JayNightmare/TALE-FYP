@@ -47,10 +47,25 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
+    const setActiveItem = (dashboard) => {
+        document.querySelectorAll(".active").forEach((el) => el.classList.remove("active"));
+
+        const activeSidebarLink = Array.from(sidebarLinks).find(
+            (link) => link.getAttribute("data-dashboard") === dashboard
+        );
+        if (activeSidebarLink) activeSidebarLink.classList.add("active");
+
+        const activeCard = document.querySelector(
+            `.dashboard-card[data-dashboard="${dashboard}"]`
+        );
+        if (activeCard) activeCard.classList.add("active");
+    };
+
     sidebarLinks.forEach((link) => {
         link.addEventListener("click", (event) => {
             event.preventDefault();
             const dashboard = link.getAttribute("data-dashboard");
+            setActiveItem(dashboard);
             loadDashboard(dashboard);
         });
     });
@@ -58,13 +73,16 @@ document.addEventListener("DOMContentLoaded", () => {
     dashboardContent.addEventListener("click", (event) => {
         const card = event.target.closest(".dashboard-card");
         if (card) {
+            event.preventDefault();
             const dashboard = card.getAttribute("data-dashboard");
+            setActiveItem(dashboard);
             loadDashboard(dashboard);
         }
     });
 
-    // Load the initial dashboard from the URL
     const urlParams = new URLSearchParams(window.location.search);
     const initialDashboard = urlParams.get("dashboard") || "home";
     loadDashboard(initialDashboard);
+
+    setActiveItem(initialDashboard);
 });
