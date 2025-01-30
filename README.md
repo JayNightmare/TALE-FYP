@@ -26,8 +26,6 @@
   
 </div>
 
-
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -35,7 +33,7 @@
     <img src="./assets/images/Small Title.png" alt="Logo" >
   </a>
 
-<h3 align="center">T.A.L.E FYP Page</h3>
+<h3 align="center">T.A.L.E FYP</h3>
 
   <p align="center">
     The Home of Discord Translations
@@ -51,7 +49,13 @@
   </p>
 </div>
 
-
+<div align="center">
+  
+  #### Source Code
+  [![Discord Bot][Discord-Bot]][Discord-Bot-url]
+  [![TALE][TALE-website]][TALE-url]
+  
+</div>
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -63,19 +67,11 @@
         <li><a href="#built-with">Built With</a></li>
       </ul>
     </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -83,7 +79,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
+A website to help the configuration of the bot settings.
 <a href="https://jaynightmare.github.io/TALE-FYP/">
     <img src="./assets/images/image.png" alt="<3" >
 </a>
@@ -228,3 +224,9 @@ Distributed under the CC0 1.0. See [`LICENSE.txt`](https://github.com/JayNightma
 <!-- // -->
 [CSS]: https://img.shields.io/badge/CSS-darkblue?style=for-the-badge&logo=css&logoColor=white
 [CSS-url]: https://www.w3schools.com/css/
+<!-- // -->
+[Discord-Bot]: https://img.shields.io/badge/-Discord_Bot-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[Discord-Bot-url]: https://github.com/JayNightmare/Translator-Discord-Bot
+<!-- // -->
+[TALE-website]: https://img.shields.io/badge/-T.A.L.E-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[TALE-url]: https://github.com/JayNightmare/TALE-FYP
