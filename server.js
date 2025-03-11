@@ -1,8 +1,8 @@
 const express = require('express');
-const session = require('express-session');
 const passport = require('passport');
 const DiscordStrategy = require('passport-discord').Strategy;
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
@@ -11,18 +11,12 @@ const NodeCache = require('node-cache');
 const app = express();
 const serverCache = new NodeCache({ stdTTL: 900 }); // 15 minutes
 
-// * Session Configuration
-app.use(session({
-    secret: process.env.SECRET_KEY,
-    resave: false,
-    saveUninitialized: false,
-}));
-
-// * CORS for GitHub Pages
+// * Middleware
 app.use(cors({
-    origin: 'https://jaynightmare.github.io', // GitHub Pages base URL
+    origin: 'https://jaynightmare.github.io', // Allow GitHub Pages frontend
     credentials: true,
 }));
+app.use(cookieParser());
 
 // * Passport Configuration
 passport.use(new DiscordStrategy({
@@ -44,7 +38,6 @@ passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((obj, done) => done(null, obj));
 
 app.use(passport.initialize());
-app.use(passport.session());
 
 // * Route: Initiate Discord Login
 app.get('/auth/discord', passport.authenticate('discord'));
@@ -62,27 +55,32 @@ app.get('/auth/discord/callback', passport.authenticate('discord', {
         access_token: user.access_token,
     }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-    const redirectUrl = `https://jaynightmare.github.io/TALE-FYP/screens/callback/index.html?token=${token}`;
-    res.redirect(redirectUrl);
+    // Set the token as an HTTP-only, secure cookie
+    res.cookie('auth_token', token, {
+        httpOnly: true,
+        secure: true, // Ensures cookies are only sent over HTTPS
+        sameSite: 'None', // Needed for cross-origin requests
+        maxAge: 3600000 // 1 hour
+    });
+
+    // Redirect to GitHub Pages frontend (callback handler)
+    res.redirect('https://jaynightmare.github.io/TALE-FYP/screens/callback/index.html');
 });
 
 // * Route: Logout
 app.get('/logout', (req, res) => {
-    res.clearCookie('auth_token', { secure: true, sameSite: 'None' }); // Clear the JWT cookie
-    req.logout(() => {
-        res.redirect('https://jaynightmare.github.io/TALE-FYP/screens/homepage/index.html');
-    });
+    res.clearCookie('auth_token', { secure: true, sameSite: 'None' }); // Clear JWT cookie
+    res.redirect('https://jaynightmare.github.io/TALE-FYP/screens/homepage/index.html');
 });
 
-// * Middleware to decode and validate JWT
+// * Middleware to decode and validate JWT from cookies
 const authenticate = (req, res, next) => {
-    const authHeader = req.headers.authorization;
-
-    if (!authHeader) {
+    const token = req.cookies.auth_token;
+    
+    if (!token) {
         return res.status(401).json({ success: false, message: 'Unauthorized' });
     }
 
-    const token = authHeader.split(' ')[1];
     try {
         req.user = jwt.verify(token, process.env.JWT_SECRET);
         next();
@@ -96,38 +94,21 @@ app.get('/api/auth/status', authenticate, async (req, res) => {
     const { username, avatar, id } = req.user;
 
     try {
-        // Check if guilds for this user are already in cache
         const cachedGuilds = serverCache.get(id);
         if (cachedGuilds) {
-            return res.json({
-                loggedIn: true,
-                username,
-                avatar,
-                id,
-                guilds: cachedGuilds, // Serve cached guilds
-            });
+            return res.json({ loggedIn: true, username, avatar, id, guilds: cachedGuilds });
         }
 
-        // Fetch guilds from Discord API
         const response = await axios.get('https://discord.com/api/v10/users/@me/guilds', {
             headers: { Authorization: `Bearer ${req.user.access_token}` },
         });
 
         const guilds = response.data;
-
-        // Filter manageable servers (Manage Server permission: 0x20)
         const manageableGuilds = guilds.filter((guild) => (guild.permissions & 0x20) === 0x20);
 
-        // Store manageable guilds in cache
         serverCache.set(id, manageableGuilds);
 
-        res.json({
-            loggedIn: true,
-            username,
-            avatar,
-            id,
-            guilds: manageableGuilds,
-        });
+        res.json({ loggedIn: true, username, avatar, id, guilds: manageableGuilds });
     } catch (error) {
         console.error('Error fetching guilds:', error);
         res.status(500).json({ loggedIn: false, message: 'Failed to fetch guilds' });
@@ -135,11 +116,10 @@ app.get('/api/auth/status', authenticate, async (req, res) => {
 });
 
 // * Route: Fetch User Guilds from Cache
-app.get("/api/auth/guilds", authenticate, (req, res) => {
+app.get('/api/auth/guilds', authenticate, (req, res) => {
     const { id } = req.user;
-
-    // Fetch cached guilds
     const cachedGuilds = serverCache.get(id);
+    
     if (cachedGuilds) {
         return res.json({ guilds: cachedGuilds });
     }
@@ -167,13 +147,9 @@ app.get('/api/user/servers', authenticate, async (req, res) => {
             });
 
             const servers = response.data;
-
-            const manageableServers = servers.filter(server =>
-                (server.permissions & 0x20) === 0x20
-            );
+            const manageableServers = servers.filter(server => (server.permissions & 0x20) === 0x20);
 
             allServers = allServers.concat(manageableServers);
-
             after = servers.length > 0 ? servers[servers.length - 1].id : null;
         } while (after);
 
@@ -192,7 +168,6 @@ app.get('/api/auth/guilds/:id', authenticate, async (req, res) => {
     const { access_token } = req.user;
 
     try {
-        // Fetch guild data from Discord API
         const response = await axios.get(`https://discord.com/api/v10/users/@me/guilds`, {
             headers: { Authorization: `Bearer ${access_token}` },
         });
@@ -204,7 +179,6 @@ app.get('/api/auth/guilds/:id', authenticate, async (req, res) => {
             return res.status(404).json({ message: 'Guild not found or you do not have access' });
         }
 
-        // Check if the user has Manage Server permission
         const canManage = (guild.permissions & 0x20) === 0x20;
 
         res.json({
@@ -227,7 +201,6 @@ app.get('/api/auth/guilds/:id', authenticate, async (req, res) => {
     }
 });
 
-
-// Start Server
+// * Start Server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
